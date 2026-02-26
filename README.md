@@ -1,60 +1,60 @@
 # 🤖 ScrumMaster AI
 
-Ein intelligenter virtueller Scrum Master, der Teams durch Scrum-Zeremonien führt und KI-gestützte Insights bietet.
+An intelligent virtual Scrum Master that guides teams through Scrum ceremonies and provides AI-powered insights.
 
 ## ✨ Features
 
-- 💬 **Intelligenter Chatbot** - Kommunikation mit einem KI-gestützten Scrum Master
-- 📅 **Scrum-Zeremonien** - Unterstützung für alle Scrum-Events:
+- 💬 **Intelligent Chatbot** - Communicate with an AI-powered Scrum Master
+- 📅 **Scrum Ceremonies** - Support for all Scrum events:
   - Daily Standup
   - Sprint Planning
   - Sprint Review
   - Sprint Retrospective
   - Backlog Refinement
-- 📊 **Sentiment-Analyse** - Automatische Stimmungsanalyse von Meeting-Texten
-- 🎯 **Sprint-Ziel Generierung** - KI-generierte Sprint Goals basierend auf Backlog Items
-- 🔍 **Retrospektiven-Analyse** - Auswertung und Handlungsempfehlungen für Retros
-- 💾 **Lokale Speicherung** - Alle Chat-Verläufe werden lokal gespeichert
-- 🌓 **Dark Mode** - Automatische Dark/Light Mode Unterstützung
+- 📊 **Sentiment Analysis** - Automatic mood analysis of meeting texts
+- 🎯 **Sprint Goal Generation** - AI-generated Sprint Goals based on Backlog Items
+- 🔍 **Retrospective Analysis** - Evaluation and action recommendations for retros
+- 💾 **Local Storage** - All chat histories are stored locally
+- 🌓 **Dark Mode** - Automatic Dark/Light Mode support
 
 ## 🚀 Installation & Setup
 
-### Voraussetzungen
+### Prerequisites
 
 - Flutter SDK (>=3.10.7)
 - Dart SDK
 - Google Gemini API Key
 
-### 1. Dependencies installieren
+### 1. Install dependencies
 
 ```bash
 flutter pub get
 ```
 
-### 2. API Key konfigurieren
+### 2. Configure API Key
 
-Öffne `lib/config/app_config.dart` und füge deinen Google Gemini API Key ein:
+Open `lib/config/app_config.dart` and insert your Google Gemini API Key:
 
 ```dart
-static const String geminiApiKey = 'DEIN_API_KEY_HIER';
+static const String geminiApiKey = 'YOUR_API_KEY_HERE';
 ```
 
-**Wie bekomme ich einen API Key?**
+**How do I get an API Key?**
 
-1. Besuche [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Melde dich mit deinem Google Account an
-3. Erstelle einen neuen API Key
-4. Kopiere den Key und füge ihn in die Config ein
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Sign in with your Google Account
+3. Create a new API Key
+4. Copy the key and paste it into the config
 
-### 3. Code generieren
+### 3. Generate code
 
-Generiere die JSON Serialisierungs-Dateien:
+Generate the JSON serialization files:
 
 ```bash
 dart run build_runner build --delete-conflicting-outputs
 ```
 
-### 4. App starten
+### 4. Run the app
 
 #### Android / iOS (Simulator/Emulator)
 ```bash
@@ -71,79 +71,79 @@ flutter run -d windows
 flutter run -d macos
 ```
 
-## 🏗️ Projektstruktur
+## 🏗️ Project Structure
 
 ```
 lib/
-├── config/          # App-Konfiguration & API Keys
-├── models/          # Datenmodelle (Message, ScrumCeremony)
+├── config/          # App configuration & API Keys
+├── models/          # Data models (Message, ScrumCeremony)
 ├── providers/       # State Management (ChatProvider)
 ├── screens/         # UI Screens (ChatScreen)
-├── services/        # Backend-Services (AI, Storage)
-├── widgets/         # Wiederverwendbare UI-Komponenten
-└── main.dart        # App Entry Point
+├── services/        # Backend services (AI, Storage)
+├── widgets/         # Reusable UI components
+└── main.dart        # App entry point
 ```
 
-## 🎯 Verwendung
+## 🎯 Usage
 
-### Normale Konversation
-1. Öffne die App
-2. Tippe eine Nachricht ein
-3. Der ScrumMaster AI antwortet mit hilfreichen Tipps
+### Regular Conversation
+1. Open the app
+2. Type a message
+3. The ScrumMaster AI responds with helpful tips
 
-### Zeremonie starten
-1. Tippe auf das Kalender-Icon (📅)
-2. Wähle eine Zeremonie aus
-3. Der AI führt dich durch das Meeting
+### Starting a Ceremony
+1. Tap the calendar icon (📅)
+2. Select a ceremony
+3. The AI guides you through the meeting
 
-### Sentiment analysieren
-1. Öffne das Menü (⋮)
-2. Wähle "Sentiment analysieren"
-3. Füge Meeting-Text ein
-4. Erhalte eine Stimmungsbewertung
+### Analyzing Sentiment
+1. Open the menu (⋮)
+2. Select "Analyze Sentiment"
+3. Paste meeting text
+4. Receive a mood rating
 
-### Sprint-Ziel generieren
-1. Öffne das Menü (⋮)
-2. Wähle "Sprint-Ziel generieren"
-3. Füge Backlog Items ein (ein Item pro Zeile)
-4. Erhalte ein KI-generiertes Sprint Goal
+### Generating a Sprint Goal
+1. Open the menu (⋮)
+2. Select "Generate Sprint Goal"
+3. Paste Backlog Items (one item per line)
+4. Receive an AI-generated Sprint Goal
 
-### Retrospektive analysieren
-1. Öffne das Menü (⋮)
-2. Wähle "Retrospektive analysieren"
-3. Füge Retro-Punkte ein
-4. Erhalte Zusammenfassung und Handlungsempfehlungen
+### Analyzing a Retrospective
+1. Open the menu (⋮)
+2. Select "Analyze Retrospective"
+3. Paste retro points
+4. Receive a summary and action recommendations
 
-## 🤖 LLM-Optionen
+## 🤖 LLM Options
 
-Die App nutzt standardmäßig **Google Gemini Pro**. Alternativ kannst du auch:
+The app uses **Google Gemini Pro** by default. Alternatively, you can also use:
 
-### OpenAI GPT-4 verwenden
+### OpenAI GPT-4
 ```dart
 // In lib/services/ai_service.dart
-// Verwende das Package: openai_api
+// Use the package: openai_api
 ```
 
-### Anthropic Claude verwenden
+### Anthropic Claude
 ```dart
 // In lib/services/ai_service.dart
-// Verwende das Package: anthropic_sdk_dart
+// Use the package: anthropic_sdk_dart
 ```
 
-### Lokale LLMs (Ollama)
+### Local LLMs (Ollama)
 ```dart
-// Installiere Ollama: https://ollama.ai
-// Verwende ollama_dart Package
+// Install Ollama: https://ollama.ai
+// Use the ollama_dart package
 ```
 
-## 📱 Unterstützte Plattformen
+## 📱 Supported Platforms
 
 - ✅ Android
 - ✅ iOS
 - ✅ Windows
 - ✅ macOS
 
-## 🔧 Technologie-Stack
+## 🔧 Technology Stack
 
 - **Framework:** Flutter 3.x
 - **State Management:** Provider
@@ -151,21 +151,21 @@ Die App nutzt standardmäßig **Google Gemini Pro**. Alternativ kannst du auch:
 - **Storage:** Shared Preferences
 - **UI:** Material Design 3
 
-## 📝 Lizenz
+## 📝 License
 
-Dieses Projekt wurde für Bildungszwecke erstellt.
+This project was created for educational purposes.
 
 ## 🤝 Contribution
 
-Feedback und Verbesserungsvorschläge sind willkommen!
+Feedback and suggestions for improvement are welcome!
 
-## ⚠️ Hinweise
+## ⚠️ Notes
 
-- Der API Key sollte NIEMALS in öffentlichen Repositories committed werden
-- Für Produktiv-Apps: API Key in Environment Variables auslagern
-- Die App benötigt eine Internetverbindung für die AI-Funktionen
+- The API Key should NEVER be committed to public repositories
+- For production apps: store the API Key in environment variables
+- The app requires an internet connection for AI features
 
-## 📚 Weitere Ressourcen
+## 📚 Further Resources
 
 - [Flutter Documentation](https://flutter.dev/docs)
 - [Google Gemini API](https://ai.google.dev/)
@@ -173,4 +173,4 @@ Feedback und Verbesserungsvorschläge sind willkommen!
 
 ---
 
-Viel Erfolg mit deinem virtuellen Scrum Master! 🚀
+Good luck with your virtual Scrum Master! 🚀
