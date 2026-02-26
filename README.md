@@ -1,5 +1,11 @@
 # 🤖 ScrumMaster AI
 
+> ⚠️ **Important:** This application requires a Google Gemini API key to function. Without a valid API key, the app will not work at all.
+> 
+> 👉 **[How to get a free Google Gemini API key](https://aistudio.google.com/app/apikey)**
+> 
+> Once you have your key, open `lib/config/app_config.dart` and replace `YOUR_API_KEY_HERE` with your key.
+
 An intelligent virtual Scrum Master that guides teams through Scrum ceremonies and provides AI-powered insights.
 
 ## ✨ Features
