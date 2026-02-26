@@ -47,7 +47,8 @@ class CeremonySelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      child: Column(
+      child: SingleChildScrollView(
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,6 +72,7 @@ class CeremonySelector extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }
