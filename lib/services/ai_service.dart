@@ -3,11 +3,11 @@ import 'package:agile_ai/config/app_config.dart';
 
 class AiService {
   late final GenerativeModel _model;
-  late final ChatSession _chat;
+  late ChatSession _chat;
   
   AiService() {
     _model = GenerativeModel(
-      model: 'gemini-pro',
+      model: 'gemma-3-27b-it',
       apiKey: AppConfig.geminiApiKey,
       generationConfig: GenerationConfig(
         temperature: 0.7,

@@ -35,7 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   
   # AI & LLM Integration
-  google_generative_ai: ^0.2.2
+  google_generative_ai: ^0.4.0
   
   # HTTP & Networking
   http: ^1.2.0
