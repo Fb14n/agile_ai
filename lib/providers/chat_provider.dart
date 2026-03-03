@@ -51,14 +51,14 @@ class ChatProvider extends ChangeNotifier {
   List<ActionItem> get currentActionItems =>
       _currentCeremony?.actionItems ?? [];
 
-  // ─── Laden ────────────────────────────────────────────────────────────────
+  // ─── Loading ──────────────────────────────────────────────────────────────
 
   Future<void> _loadMessages() async {
     _messages = await _storageService.loadMessages();
     notifyListeners();
   }
 
-  // ─── Suche ────────────────────────────────────────────────────────────────
+  // ─── Search ───────────────────────────────────────────────────────────────
 
   void setSearchQuery(String query) {
     _searchQuery = query;
@@ -115,7 +115,7 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ─── Action Items ─────────────────────────────────────────────────────────
+  // ─── Action items ─────────────────────────────────────────────────────────
 
   void addActionItem(String text, {String? assignee}) {
     if (_currentCeremony == null) return;
@@ -136,7 +136,7 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ─── Chat senden ──────────────────────────────────────────────────────────
+  // ─── Send message ─────────────────────────────────────────────────────────
 
   Future<void> sendMessage(String text) async {
     if (text.trim().isEmpty) return;
@@ -147,14 +147,14 @@ class ChatProvider extends ChangeNotifier {
   Future<void> startCeremony(String ceremonyName) async {
     resetTimer();
 
-    // Timebox aus AppConfig lesen und Timer starten
+    // Read timebox from AppConfig and start timer
     final details = _getCeremonyDetails(ceremonyName);
     final timebox = details?['timeboxMinutes'] as int? ?? 60;
 
     _currentCeremony = ScrumCeremony(name: ceremonyName, timeboxMinutes: timebox);
     startTimer(timebox);
 
-    // A8: Kontext aus vergangenen Zeremonien aufbauen
+    // A8: Build context from past ceremonies
     final pastCeremonies = await _storageService.loadCeremonies();
     final pastSummaries = pastCeremonies
         .where((c) => c.summary != null)
@@ -172,7 +172,7 @@ class ChatProvider extends ChangeNotifier {
       metadata: {'ceremony': ceremonyName},
     );
 
-    // D2: Kontextuellen Scrum-Tipp hinzufügen
+    // D2: Add contextual Scrum tip
     _runAi(
       () => _settingsProvider.aiService.getScrumTip(ceremonyName),
       type: MessageType.tip,
@@ -266,7 +266,7 @@ class ChatProvider extends ChangeNotifier {
         .toList();
     if (summaries.isEmpty) {
       _messages.add(Message(
-        text: 'Noch keine Retrospektiven-Zusammenfassungen vorhanden.',
+        text: 'No retrospective summaries available yet.',
         isUser: false,
       ));
       notifyListeners();
@@ -296,7 +296,7 @@ class ChatProvider extends ChangeNotifier {
       final response = await aiCall();
       _messages.add(Message(text: response, isUser: false, type: type, metadata: metadata));
     } catch (e) {
-      _messages.add(Message(text: 'Fehler: $e', isUser: false));
+      _messages.add(Message(text: 'Error: $e', isUser: false));
     } finally {
       _isLoading = false;
       await _storageService.saveMessages(_messages);

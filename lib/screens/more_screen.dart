@@ -7,7 +7,7 @@ import 'package:agile_ai/screens/team_screen.dart';
 import 'package:agile_ai/screens/glossary_screen.dart';
 import 'package:agile_ai/screens/planning_poker_screen.dart';
 
-/// "Mehr"-Tab: Links zu Settings, Team, Glossar, Planning Poker.
+/// "More" tab: links to Settings, Team, Glossary, and Planning Poker.
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
 
@@ -19,7 +19,7 @@ class MoreScreen extends StatelessWidget {
           appBar: AppBar(title: const Text('Mehr')),
           body: ListView(
             children: [
-              // ── Team Health Summary ──────────────────────────────────────
+              // ── Team health summary ──────────────────────────────────────
               Container(
                 margin: const EdgeInsets.all(16),
                 padding: const EdgeInsets.all(16),
@@ -57,7 +57,7 @@ class MoreScreen extends StatelessWidget {
                 ),
               ),
 
-              // ── Hauptmenü ────────────────────────────────────────────────
+              // ── Main menu ────────────────────────────────────────────────
               _SectionHeader('Verwaltung'),
               _NavTile(
                 icon: Icons.people_outline,

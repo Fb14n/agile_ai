@@ -42,11 +42,11 @@ class TeamProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Namen aller Mitglieder als String-Liste (für KI-Kontext)
+  /// All member names as a string list (for AI context).
   List<String> get memberNames => _members.map((m) => m.name).toList();
 
-  /// Komma-getrennte Mitgliederliste mit Rollen
+  /// Comma-separated member list with roles.
   String get teamSummary => _members.isEmpty
-      ? 'Kein Team konfiguriert'
+      ? 'No team configured'
       : _members.map((m) => '${m.name} (${m.role})').join(', ');
 }

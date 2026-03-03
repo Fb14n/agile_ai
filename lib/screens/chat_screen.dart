@@ -207,7 +207,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  // ─── Dialoge ──────────────────────────────────────────────────────────────
+  // ─── Dialogs ──────────────────────────────────────────────────────────────
 
   void _showSentimentDialog() => _showTextInputDialog(
         title: 'Sentiment analysieren',
@@ -361,7 +361,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _showMaturityDialog() {
-    // Fragen für das Scrum-Reifegrad-Assessment
+    // Questions for the Scrum maturity assessment
     final questions = [
       'Daily Standups sind fokussiert und pünktlich',
       'Sprint Planning erzeugt realistische Sprint-Ziele',
@@ -416,7 +416,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  /// B1: Aktuelle Chat-Nachrichten als Markdown exportieren
+  /// B1: Export current chat messages as Markdown.
   Future<void> _exportChat() async {
     final messages = context.read<ChatProvider>().messages;
     if (messages.isEmpty) return;
@@ -508,7 +508,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           body: Column(
             children: [
-              // ── Suchleiste ──────────────────────────────────────────────
+              // ── Search bar ──────────────────────────────────────────────
               if (_showSearch)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -534,7 +534,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
 
-              // ── Timer (bei aktiver Zeremonie) ───────────────────────────
+              // ── Timer (when a ceremony is active) ───────────────────────────
               if (chat.currentCeremony != null && chat.timerMaxSeconds > 0)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -558,11 +558,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
 
-              // ── Action Items Panel ──────────────────────────────────────
+              // ── Action items panel ──────────────────────────────────────
               if (_showActionItems && chat.currentCeremony != null)
                 _buildActionItemsPanel(chat),
 
-              // ── Chat-Nachrichten ────────────────────────────────────────
+              // ── Chat messages ────────────────────────────────────────
               Expanded(
                 child: chat.messages.isEmpty
                     ? _buildEmptyState()
@@ -582,7 +582,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
               ),
 
-              // ── Eingabeleiste ───────────────────────────────────────────
+              // ── Input bar ───────────────────────────────────────────
               _buildInputBar(chat),
             ],
           ),

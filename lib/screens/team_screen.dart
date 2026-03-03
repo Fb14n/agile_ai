@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:agile_ai/providers/team_provider.dart';
 import 'package:agile_ai/models/team_member.dart';
 
-/// Team-Verwaltungs-Screen: Mitglieder hinzufügen, bearbeiten, löschen.
+/// Team management screen: add, edit, and delete members.
 class TeamScreen extends StatelessWidget {
   const TeamScreen({super.key});
 
@@ -26,7 +26,7 @@ class TeamScreen extends StatelessWidget {
               ? _buildEmptyState(context, team)
               : Column(
                   children: [
-                    // Team-Zusammenfassung
+                    // Team summary
                     Container(
                       margin: const EdgeInsets.all(12),
                       padding: const EdgeInsets.all(12),
@@ -57,7 +57,7 @@ class TeamScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Mitglieder-Liste
+                    // Member list
                     Expanded(
                       child: ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -211,7 +211,7 @@ class _MemberCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Farbe aus Hex-String
+    // Parse color from hex string
     Color avatarColor;
     try {
       avatarColor =

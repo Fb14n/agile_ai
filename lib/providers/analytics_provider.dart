@@ -4,7 +4,7 @@ import 'package:agile_ai/models/sprint_data.dart';
 import 'package:agile_ai/services/storage_service.dart';
 import 'package:agile_ai/services/database_service.dart';
 
-/// Aggregiert Sentimentdaten, Velocity und Retro-Themen aus gespeicherten Daten.
+/// Aggregates sentiment data, velocity, and retro themes from stored data.
 class AnalyticsProvider extends ChangeNotifier {
   final StorageService _storage = StorageService();
   final DatabaseService _db = DatabaseService();
@@ -28,7 +28,7 @@ class AnalyticsProvider extends ChangeNotifier {
 
   // ─── Sentiment ────────────────────────────────────────────────────────────
 
-  /// Sentiment-Scores der letzten n Ceremonies mit Sentiment-Daten
+  /// Sentiment scores from the last n ceremonies that have sentiment data.
   List<Map<String, dynamic>> get sentimentHistory {
     return _ceremonies
         .where((c) => c.sentiment != null && c.sentiment!['score'] != null)
@@ -69,7 +69,7 @@ class AnalyticsProvider extends ChangeNotifier {
     return vels.reduce((a, b) => a + b) / vels.length;
   }
 
-  // ─── Ceremony-Statistiken ─────────────────────────────────────────────────
+  // ─── Ceremony statistics ──────────────────────────────────────────────────
 
   int get totalCeremonies => _ceremonies.length;
 
@@ -92,17 +92,17 @@ class AnalyticsProvider extends ChangeNotifier {
     return completedActionItems / totalActionItems;
   }
 
-  /// Gibt die letzten Retro-Zusammenfassungen zurück
+  /// Returns the last retro summaries.
   List<String> get retroSummaries => _ceremonies
       .where((c) =>
           c.name == 'Sprint Retrospective' && c.summary != null)
       .map((c) => c.summary!)
       .toList();
 
-  // ─── Team-Health-Score (0.0–1.0) ─────────────────────────────────────────
+  // ─── Team health score (0.0–1.0) ─────────────────────────────────────────
 
   double get teamHealthScore {
-    double score = 0.5; // Baseline
+    double score = 0.5; // baseline
     if (averageSentiment > 0) {
       score += (averageSentiment / 10) * 0.3;
     }

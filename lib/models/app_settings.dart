@@ -1,8 +1,8 @@
-/// Einstellungen der App – kein JSON, direkt via SharedPreferences gespeichert
+/// App settings – not JSON-serialized, stored directly via SharedPreferences.
 class AppSettings {
-  final String language;      // 'de' | 'en'
-  final String aiModel;       // Gemini/Gemma Model-ID
-  final String personaStyle;  // 'coach' | 'direct' | 'formal' | 'casual'
+  final String language;         // 'de' | 'en'
+  final String aiModel;          // Gemini/Gemma model ID
+  final String personaStyle;     // 'coach' | 'direct' | 'formal' | 'casual'
   final bool onboardingComplete;
   final int currentSprintNumber;
 

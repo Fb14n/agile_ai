@@ -8,11 +8,11 @@ class AppConfig {
   static const String appName = 'AgileAI';
   static const String appVersion = '1.0.0';
 
-  // ─── Sprachunterstützung ─────────────────────────────────────────────────
-  /// Unterstützte Sprachen: 'de' | 'en'
+  // ─── Language support ────────────────────────────────────────────────────
+  /// Supported languages: 'de' | 'en'
   static const String defaultLanguage = 'de';
 
-  // ─── Scrum-Zeremonien mit Details ────────────────────────────────────────
+  // ─── Scrum ceremonies with details ───────────────────────────────────────
   static const List<Map<String, dynamic>> ceremonyDetails = [
     {
       'name': 'Daily Standup',
@@ -114,11 +114,11 @@ class AppConfig {
     },
   ];
 
-  /// Nur die Namen (Rückwärtskompatibilität)
+  /// Names only (backward compatibility)
   static List<String> get ceremonies =>
       ceremonyDetails.map((c) => c['name'] as String).toList();
 
-  // ─── KI-Modelle ───────────────────────────────────────────────────────────
+  // ─── AI models ───────────────────────────────────────────────────────────
   static const List<Map<String, String>> availableModels = [
     {'id': 'gemma-3-27b-it', 'label': 'Gemma 3 27B (Standard)'},
     {'id': 'gemma-3-12b-it', 'label': 'Gemma 3 12B (Schnell)'},
@@ -129,7 +129,7 @@ class AppConfig {
 
   static const String defaultModel = 'gemma-3-27b-it';
 
-  // ─── Persona-Stile ────────────────────────────────────────────────────────
+  // ─── Persona styles ──────────────────────────────────────────────────────
   static const List<Map<String, String>> personaStyles = [
     {'id': 'coach', 'label': 'Coach (Empfohlen)', 'desc': 'Unterstützend, fragend, motivierend'},
     {'id': 'direct', 'label': 'Direkt', 'desc': 'Klar, prägnant, auf den Punkt'},
@@ -137,7 +137,7 @@ class AppConfig {
     {'id': 'casual', 'label': 'Casual', 'desc': 'Locker, teamorientiert'},
   ];
 
-  // ─── System-Prompts ───────────────────────────────────────────────────────
+  // ─── System prompts ──────────────────────────────────────────────────────
   static String systemPrompt({String language = 'de', String persona = 'coach'}) {
     final personaInstructions = _personaInstructions[persona] ?? _personaInstructions['coach']!;
     if (language == 'en') {
@@ -177,10 +177,10 @@ Sei immer praktisch und handlungsorientiert. Halte Antworten prägnant, außer D
         'Kommuniziere locker und teamorientiert. Duze das Team. Sei zugänglich.',
   };
 
-  // ─── Fibonacci-Skala für Story Points ────────────────────────────────────
+  // ─── Fibonacci scale for story points ───────────────────────────────────
   static const List<int> fibonacciPoints = [1, 2, 3, 5, 8, 13, 21];
 
-  // ─── Scrum-Wissensbasis ───────────────────────────────────────────────────
+  // ─── Scrum knowledge base ─────────────────────────────────────────────────
   static const List<Map<String, dynamic>> knowledgeBase = [
     {
       'category': 'Rollen',

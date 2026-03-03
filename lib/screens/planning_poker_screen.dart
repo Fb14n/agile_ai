@@ -4,14 +4,14 @@ import 'package:agile_ai/providers/settings_provider.dart';
 import 'package:agile_ai/providers/team_provider.dart';
 import 'package:agile_ai/config/app_config.dart';
 
-/// Planning-Poker-Screen: Moderierter Schätzungsworkflow mit KI-Unterstützung.
+/// Planning Poker screen: AI-supported estimation workflow.
 ///
-/// Ablauf:
-/// 1. User Story eingeben
-/// 2. KI gibt erste Schätzung und Begründung
-/// 3. Jedes Teammitglied gibt seine Schätzung ein
-/// 4. Bei Abweichungen: KI moderiert die Diskussion
-/// 5. Finale Schätzung festlegen
+/// Flow:
+/// 1. Enter user story
+/// 2. AI provides initial estimate and reasoning
+/// 3. Each team member enters their estimate
+/// 4. On divergence: AI moderates the discussion
+/// 5. Finalize the estimate
 class PlanningPokerScreen extends StatefulWidget {
   const PlanningPokerScreen({super.key});
 
@@ -46,7 +46,7 @@ class _PlanningPokerScreenState extends State<PlanningPokerScreen> {
       final result =
           await ai.estimateStoryPoints(_storyCtrl.text.trim());
       setState(() => _aiSuggestion = result);
-      // Team-Votes initialisieren
+      // Initialize team votes
       final members = context.read<TeamProvider>().memberNames;
       for (final m in members) {
         _votes[m] = null;
@@ -113,7 +113,7 @@ class _PlanningPokerScreenState extends State<PlanningPokerScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Schritt 1: User Story ────────────────────────────────────
+            // ── Step 1: User story ────────────────────────────────────
             _StepCard(
               step: '1',
               title: 'User Story',
@@ -147,7 +147,7 @@ class _PlanningPokerScreenState extends State<PlanningPokerScreen> {
             ),
             const SizedBox(height: 12),
 
-            // ── Schritt 2: KI-Schätzung ──────────────────────────────────
+            // ── Step 2: AI estimate ──────────────────────────────────
             if (_phase.index >= _Phase.aiEstimate.index)
               _StepCard(
                 step: '2',
@@ -163,7 +163,7 @@ class _PlanningPokerScreenState extends State<PlanningPokerScreen> {
                     : Text(_aiSuggestion ?? ''),
               ),
 
-            // ── Schritt 3: Team-Votes ────────────────────────────────────
+            // ── Step 3: Team votes ────────────────────────────────────
             if (_phase.index >= _Phase.voting.index) ...[
               const SizedBox(height: 12),
               _StepCard(
@@ -208,7 +208,7 @@ class _PlanningPokerScreenState extends State<PlanningPokerScreen> {
                     const SizedBox(height: 12),
                     if (_votes.values
                         .any((v) => v != null)) ...[
-                      // Prüfen ob Konsens
+                      // Check for consensus
                       if (_allAgreed())
                         _ConsensusWidget(
                             points: _votes.values.first!,
@@ -234,7 +234,7 @@ class _PlanningPokerScreenState extends State<PlanningPokerScreen> {
               ),
             ],
 
-            // ── Schritt 4: Diskussion ────────────────────────────────────
+            // ── Step 4: Discussion ────────────────────────────────────
             if (_phase.index >= _Phase.discussion.index) ...[
               const SizedBox(height: 12),
               _StepCard(
@@ -284,7 +284,7 @@ class _PlanningPokerScreenState extends State<PlanningPokerScreen> {
               ),
             ],
 
-            // ── Schritt 5: Ergebnis ──────────────────────────────────────
+            // ── Step 5: Result ──────────────────────────────────────
             if (_phase == _Phase.done) ...[
               const SizedBox(height: 12),
               Card(
@@ -333,7 +333,7 @@ class _PlanningPokerScreenState extends State<PlanningPokerScreen> {
 
   bool _allAgreed() {
     final vals = _votes.values.whereType<int>().toList();
-    if (vals.length < _votes.length) return false; // noch nicht alle
+    if (vals.length < _votes.length) return false; // not all votes in yet
     return vals.every((v) => v == vals.first);
   }
 }

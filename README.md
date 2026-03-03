@@ -1,78 +1,92 @@
-# 🤖 AgileAI – KI-Scrum-Master
+# 🤖 AgileAI – AI-Powered Scrum Master
 
-> ⚠️ **Wichtig:** Die App benötigt einen Google Gemini API Key.
-> 👉 **[Kostenlosen Key erhalten](https://aistudio.google.com/app/apikey)**
-> 
-> Key beim ersten Start über das Onboarding oder in `lib/config/app_config.dart` eintragen.
+> ⚠️ **Important:** This app requires a Google Gemini API key to function.
+> 👉 **[Get a free key at Google AI Studio](https://aistudio.google.com/app/apikey)**
+>
+> Enter the key during the onboarding flow on first launch, or set it directly in `lib/config/app_config.dart`.
 
-Ein intelligenter, KI-gestützter Scrum Master für Flutter. Führt Teams durch alle Scrum-Zeremonien, analysiert Sentiment, verwaltet Backlog und Sprint – alles über Google Gemini.
+An intelligent, AI-backed Scrum Master assistant built with Flutter. Guides teams through all Scrum ceremonies, analyzes sentiment, manages the backlog and sprint — all powered by Google Gemini.
 
 ## ✨ Features
 
-| Bereich | Features |
+| Area | Features |
 |---|---|
-| **Chat** | Freie Konversation, Spracheingabe, Chat exportieren |
-| **Zeremonien** | Alle 5 Scrum-Events mit KI-Moderation, Tages-Tipps, Zeremonien-Log |
-| **Backlog** | CRUD, Story Point Schätzung, INVEST-Validierung, Akzeptanzkriterien, Sprint-Zuweisung |
-| **Sprint-View** | Kapazitätsanzeige (SP gesamt/erledigt/Fortschritt) |
-| **Analytics** | Sentiment-Verlauf, Velocity-Chart, Team Health Score |
-| **Team** | Teammitglieder CRUD mit Rolle |
-| **Planning Poker** | 5-Phasen-Schätzworkshop mit KI-Moderation |
-| **Glossar** | Offline-Scrum-Lexikon (durchsuchbar) |
-| **Einstellungen** | Sprache (DE/EN), Modell, Persona, Sprint-Nummer |
-| **Onboarding** | Erststart-Einrichtung |
-| **KI-Tools** | Definition of Done, Scrum-Reife-Bewertung, Retro-Muster-Analyse |
+| **Chat** | Free conversation with the AI Scrum Master, voice input, chat export |
+| **Ceremonies** | All 5 Scrum events with AI facilitation, daily tips, ceremony log |
+| **Backlog** | CRUD, AI story point estimation, INVEST validation, acceptance criteria, sprint assignment |
+| **Sprint view** | Capacity display (total SP / completed SP / progress) |
+| **Analytics** | Sentiment history chart, velocity chart, team health score |
+| **Team** | Team member CRUD with role |
+| **Planning Poker** | 5-phase estimation workshop with AI moderation |
+| **Glossary** | Offline, searchable Scrum glossary |
+| **Settings** | Language (DE/EN), AI model, persona, sprint number |
+| **Onboarding** | First-launch setup wizard |
+| **AI tools** | Definition of Done generator, Scrum maturity assessment, retro pattern analysis |
 
-## 🚀 Schnellstart
+## 🚀 Quick Start
 
 ```bash
-# Dependencies
+# Install dependencies
 flutter pub get
 
-# JSON-Code generieren (nach Modell-Änderungen)
+# Generate JSON serialization code (required after model changes)
 dart run build_runner build --delete-conflicting-outputs
 
-# macOS starten
+# Run on macOS
 flutter run -d macos
 
-# Windows
+# Run on Windows
 flutter run -d windows
 
-# Android/iOS
+# Run on Android / iOS
 flutter run
 ```
 
-## 🏗️ Architektur
+## 🏗️ Architecture
 
 ```
-Screens/Widgets
-      ↕
-Provider (ChangeNotifier)
+Screens / Widgets
+       ↕
+Providers (ChangeNotifier)
   ChatProvider · BacklogProvider · SettingsProvider · AnalyticsProvider · TeamProvider
-      ↕
+       ↕
 Services
   AiService (Gemini) · StorageService (SharedPreferences) · DatabaseService (SQLite)
 ```
 
-Vollständige technische Dokumentation: **[DOCUMENTATION.md](DOCUMENTATION.md)**
+Full technical documentation (in German): **[DOCUMENTATION.md](DOCUMENTATION.md)**
 
-## 📱 Plattformen
+## 📁 Project Structure
+
+```
+lib/
+├── config/          # Central config: API key, model, prompts, ceremonies, glossary
+├── models/          # Data models with JSON serialization (*.g.dart)
+├── providers/       # State management (ChangeNotifier)
+├── screens/         # All UI screens
+├── services/        # AI, storage, and database services
+├── widgets/         # Reusable UI components
+└── main.dart        # App entry point, MultiProvider setup
+```
+
+## 📱 Supported Platforms
 
 ✅ macOS · ✅ Windows · ✅ Android · ✅ iOS
 
-## ⚠️ Hinweise
+## ⚠️ Important Notes
 
-- API Key **niemals** in öffentliche Repositories committen
-- macOS: `com.apple.security.network.client` muss in beiden Entitlements-Dateien gesetzt sein
-- Spracheingabe (macOS): zusätzlich `com.apple.security.device.microphone` in `DebugProfile.entitlements`
-- Für KI-Funktionen ist eine Internetverbindung nötig (Glossar funktioniert offline)
+- **Never commit your API key** to a public repository — use environment variables in production.
+- **macOS sandbox:** `com.apple.security.network.client` must be set in both entitlements files for API calls to work.
+- **macOS voice input:** additionally requires `com.apple.security.device.microphone` in `DebugProfile.entitlements`.
+- AI features require an active internet connection. The glossary works fully offline.
+- After changing `pubspec.yaml` or entitlements, a full restart (`flutter run`) is required — hot restart is not enough.
 
 ## 🔧 Tech Stack
 
 Flutter · Dart · Provider · Google Gemini · fl_chart · sqflite · SharedPreferences · Material Design 3
 
-## 📚 Ressourcen
+## 📚 Resources
 
-- [Flutter Docs](https://flutter.dev/docs)
+- [Flutter Documentation](https://flutter.dev/docs)
 - [Google Gemini API](https://ai.google.dev/)
 - [Scrum Guide](https://scrumguides.org/)

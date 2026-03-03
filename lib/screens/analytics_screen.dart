@@ -29,7 +29,7 @@ class AnalyticsScreen extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                // ── Team Health Score ────────────────────────────────────
+                // ── Team health score ────────────────────────────────────
                 _SectionCard(
                   title: 'Team Health',
                   child: Row(
@@ -82,7 +82,7 @@ class AnalyticsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
-                // ── Action Item Completion Rate ───────────────────────────
+                // ── Action item completion rate ───────────────────────────
                 if (analytics.totalActionItems > 0)
                   _SectionCard(
                     title: 'Action Item Abschlussrate',
@@ -104,7 +104,7 @@ class AnalyticsScreen extends StatelessWidget {
                   ),
                 const SizedBox(height: 16),
 
-                // ── Sentiment-Verlauf ─────────────────────────────────────
+                // ── Sentiment history ─────────────────────────────────────
                 _SectionCard(
                   title: 'Sentiment-Verlauf',
                   child: SizedBox(
@@ -115,7 +115,7 @@ class AnalyticsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
-                // ── Sprint Velocity ───────────────────────────────────────
+                // ── Sprint velocity ───────────────────────────────────────
                 _SectionCard(
                   title: 'Sprint Velocity',
                   trailing: TextButton.icon(
@@ -143,7 +143,7 @@ class AnalyticsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
-                // ── Zeremonien-Übersicht ──────────────────────────────────
+                // ── Ceremony overview ──────────────────────────────────
                 if (analytics.ceremonyCounts.isNotEmpty)
                   _SectionCard(
                     title: 'Zeremonien-Übersicht',
@@ -252,7 +252,7 @@ class AnalyticsScreen extends StatelessWidget {
   }
 }
 
-// ─── Hilfs-Widgets ─────────────────────────────────────────────────────────
+// ─── Helper widgets ─────────────────────────────────────────────────────────
 
 class _SectionCard extends StatelessWidget {
   final String title;

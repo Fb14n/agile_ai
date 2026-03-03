@@ -59,7 +59,7 @@ class BacklogProvider extends ChangeNotifier {
   Future<void> assignToSprint(String itemId, int sprintNumber) async {
     final index = _items.indexWhere((i) => i.id == itemId);
     if (index != -1) {
-      // sprintNumber == 0 bedeutet: aus Sprint entfernen → zurück in Backlog
+      // sprintNumber == 0 means: remove from sprint → back to backlog
       final newSprint = sprintNumber <= 0 ? null : sprintNumber;
       _items[index] = _items[index].copyWith(
         sprintNumber: newSprint,
@@ -79,7 +79,7 @@ class BacklogProvider extends ChangeNotifier {
     }
   }
 
-  // ─── KI-Aktionen ──────────────────────────────────────────────────────────
+  // ─── AI actions ───────────────────────────────────────────────────────────
 
   Future<String> estimateItem(String itemId) async {
     final item = _items.firstWhere((i) => i.id == itemId);
@@ -122,7 +122,7 @@ class BacklogProvider extends ChangeNotifier {
     }
   }
 
-  // ─── Sprint-Verwaltung ────────────────────────────────────────────────────
+  // ─── Sprint management ────────────────────────────────────────────────────
 
   Future<void> saveSprint(SprintData sprint) async {
     final index = _sprints.indexWhere((s) => s.sprintNumber == sprint.sprintNumber);

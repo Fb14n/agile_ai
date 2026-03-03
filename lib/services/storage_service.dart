@@ -46,7 +46,7 @@ class StorageService {
     return jsonList.map((json) => ScrumCeremony.fromJson(json)).toList();
   }
 
-  // ─── API Key ──────────────────────────────────────────────────────────────
+  // ─── API key ──────────────────────────────────────────────────────────────
 
   Future<void> saveApiKey(String apiKey) async {
     final prefs = await SharedPreferences.getInstance();

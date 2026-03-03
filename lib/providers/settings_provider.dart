@@ -3,9 +3,9 @@ import 'package:agile_ai/models/app_settings.dart';
 import 'package:agile_ai/services/storage_service.dart';
 import 'package:agile_ai/services/ai_service.dart';
 
-/// Verwaltet alle App-weiten Einstellungen: Sprache, KI-Modell, Persona.
-/// Alle anderen Provider erhalten eine Referenz auf diesen Provider,
-/// damit sie AiService mit den richtigen Einstellungen neu konfigurieren können.
+/// Manages all app-wide settings: language, AI model, persona.
+/// All other providers hold a reference to this provider so they can
+/// reconfigure AiService whenever settings change.
 class SettingsProvider extends ChangeNotifier {
   final StorageService _storage = StorageService();
   AppSettings _settings = const AppSettings();
@@ -31,7 +31,7 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Gibt einen (geteilten) AiService zurück, der mit aktuellen Settings konfiguriert ist
+  /// Returns a (shared) AiService configured with the current settings.
   AiService get aiService {
     _sharedAiService ??= AiService(
       language: _settings.language,

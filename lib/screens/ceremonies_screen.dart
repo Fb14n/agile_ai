@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:agile_ai/providers/analytics_provider.dart';
 import 'package:agile_ai/models/scrum_ceremony.dart';
 
-/// Übersicht aller vergangenen Scrum-Zeremonien mit Filter und Detailansicht.
+/// Overview of all past Scrum ceremonies with filter and detail view.
 class CeremoniesScreen extends StatefulWidget {
   const CeremoniesScreen({super.key});
 
@@ -248,7 +248,7 @@ class _CeremonyDetailSheet extends StatelessWidget {
         controller: scrollController,
         padding: const EdgeInsets.all(16),
         children: [
-          // Metadaten
+          // Metadata
           _DetailRow('Datum', fmt.format(ceremony.startTime)),
           if (ceremony.endTime != null)
             _DetailRow('Dauer',
@@ -262,7 +262,7 @@ class _CeremonyDetailSheet extends StatelessWidget {
                 '${(ceremony.sentiment!['score'] as num).toStringAsFixed(1)} / 10'),
           const SizedBox(height: 16),
 
-          // KI-Zusammenfassung
+          // AI summary
           if (ceremony.summary != null) ...[
             Text('Zusammenfassung',
                 style: Theme.of(context)
@@ -274,7 +274,7 @@ class _CeremonyDetailSheet extends StatelessWidget {
             const SizedBox(height: 16),
           ],
 
-          // Notizen
+          // Notes
           if (ceremony.notes.isNotEmpty) ...[
             Text('Notizen',
                 style: Theme.of(context)
@@ -291,7 +291,7 @@ class _CeremonyDetailSheet extends StatelessWidget {
             const SizedBox(height: 16),
           ],
 
-          // Action Items
+          // Action items
           if (ceremony.actionItems.isNotEmpty) ...[
             Text('Action Items',
                 style: Theme.of(context)

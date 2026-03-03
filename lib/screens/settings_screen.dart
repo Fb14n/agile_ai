@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:agile_ai/providers/settings_provider.dart';
 import 'package:agile_ai/config/app_config.dart';
 
-/// Einstellungs-Screen: Sprache, KI-Modell, Persona, Sprint, Daten.
+/// Settings screen: language, AI model, persona, sprint number, data.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -15,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
           appBar: AppBar(title: const Text('Einstellungen')),
           body: ListView(
             children: [
-              // ── Sprache ─────────────────────────────────────────────────
+              // ── Language ─────────────────────────────────────────────────
               _SectionHeader('Sprache & Stil'),
               ListTile(
                 leading: const Icon(Icons.language),
@@ -33,7 +33,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
 
-              // ── KI-Modell ───────────────────────────────────────────────
+              // ── AI model ───────────────────────────────────────────────
               _SectionHeader('KI-Konfiguration'),
               ListTile(
                 leading: const Icon(Icons.smart_toy_outlined),
@@ -80,7 +80,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
 
-              // ── Daten ───────────────────────────────────────────────────
+              // ── Data ───────────────────────────────────────────────────
               _SectionHeader('Daten'),
               ListTile(
                 leading:

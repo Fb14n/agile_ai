@@ -29,11 +29,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Unabhängige Provider zuerst
+        // Independent providers first
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         ChangeNotifierProvider(create: (_) => TeamProvider()),
         ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
-        // Provider mit Abhängigkeit auf SettingsProvider
+        // Providers depending on SettingsProvider
         ChangeNotifierProxyProvider<SettingsProvider, ChatProvider>(
           create: (ctx) => ChatProvider(ctx.read<SettingsProvider>()),
           update: (_, settings, prev) => prev ?? ChatProvider(settings),
@@ -87,8 +87,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// Zeigt einen Ladeindikator, bis die Settings geladen sind,
-/// dann entweder OnboardingScreen oder MainScreen.
+/// Shows a loading indicator until settings are loaded,
+/// then routes to either OnboardingScreen or MainScreen.
 class _AppRoot extends StatelessWidget {
   const _AppRoot();
 

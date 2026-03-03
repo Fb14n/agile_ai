@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:agile_ai/config/app_config.dart';
 
-/// Offline-Scrum-Glossar auf Basis von AppConfig.knowledgeBase.
-/// Kein API-Call erforderlich.
+/// Offline Scrum glossary based on AppConfig.knowledgeBase.
+/// No API call required.
 class GlossaryScreen extends StatefulWidget {
   const GlossaryScreen({super.key});
 

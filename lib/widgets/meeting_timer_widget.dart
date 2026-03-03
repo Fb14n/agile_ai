@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Kreisförmiger Timer-Ring mit Countdown-Anzeige für Zeremonien.
+/// Circular timer ring with countdown display for ceremonies.
 class MeetingTimerWidget extends StatelessWidget {
   final int elapsedSeconds;
   final int maxSeconds;

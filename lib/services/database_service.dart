@@ -5,8 +5,8 @@ import 'package:agile_ai/models/backlog_item.dart';
 import 'package:agile_ai/models/sprint_data.dart';
 import 'package:agile_ai/models/team_member.dart';
 
-/// SQLite-Datenbank für strukturierte, durchsuchbare Daten.
-/// Ersetzt SharedPreferences für BacklogItems, SprintData und TeamMembers.
+/// SQLite database for structured, queryable data.
+/// Replaces SharedPreferences for BacklogItems, SprintData, and TeamMembers.
 class DatabaseService {
   static Database? _db;
   static const int _version = 1;
@@ -47,7 +47,7 @@ class DatabaseService {
     ''');
   }
 
-  // ─── BacklogItems ─────────────────────────────────────────────────────────
+  // ─── Backlog items ─────────────────────────────────────────────────────────
 
   Future<void> saveBacklogItem(BacklogItem item) async {
     final db = await database;
@@ -84,7 +84,7 @@ class DatabaseService {
     await batch.commit(noResult: true);
   }
 
-  // ─── SprintData ───────────────────────────────────────────────────────────
+  // ─── Sprint data ───────────────────────────────────────────────────────────
 
   Future<void> saveSprintData(SprintData sprint) async {
     final db = await database;
@@ -109,7 +109,7 @@ class DatabaseService {
         where: 'sprint_number = ?', whereArgs: [sprintNumber]);
   }
 
-  // ─── TeamMembers ──────────────────────────────────────────────────────────
+  // ─── Team members ──────────────────────────────────────────────────────────
 
   Future<void> saveTeamMember(TeamMember member) async {
     final db = await database;

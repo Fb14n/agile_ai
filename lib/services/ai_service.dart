@@ -31,7 +31,7 @@ class AiService {
     );
   }
 
-  /// Aktualisiert Sprache/Persona und startet die Chat-Session neu
+  /// Reconfigures language/persona and restarts the chat session.
   void reconfigure({String? language, String? persona, String? modelId}) {
     if (language != null) _language = language;
     if (persona != null) _persona = persona;
@@ -45,7 +45,7 @@ class AiService {
       final response = await _chat.sendMessage(Content.text(message));
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler beim Senden: $e');
+      throw Exception('Error sending message: $e');
     }
   }
 
@@ -72,7 +72,7 @@ Bitte gib mir:
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Zeremonie-Moderation: $e');
+      throw Exception('Error facilitating ceremony: $e');
     }
   }
 
@@ -84,7 +84,7 @@ Bitte gib mir:
     );
   }
 
-  // ─── Analyse-Methoden (statuslose Einzelanfragen) ─────────────────────────
+  // ─── Stateless single-request methods ────────────────────────────────────
 
   Future<String> analyzeSentiment(String text) async {
     try {
@@ -111,7 +111,7 @@ Schlüsselwörter: [2-3 Emotions-Wörter]''';
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Sentiment-Analyse: $e');
+      throw Exception('Error in sentiment analysis: $e');
     }
   }
 
@@ -141,7 +141,7 @@ Das Sprint-Ziel sollte:
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Sprint-Ziel Generierung: $e');
+      throw Exception('Error generating sprint goal: $e');
     }
   }
 
@@ -171,11 +171,11 @@ Erstelle:
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Retrospektiven-Analyse: $e');
+      throw Exception('Error in retrospective analysis: $e');
     }
   }
 
-  // ─── Neue KI-Methoden ─────────────────────────────────────────────────────
+  // ─── Additional AI methods ────────────────────────────────────────────────
 
   Future<String> estimateStoryPoints(String userStory) async {
     try {
@@ -202,7 +202,7 @@ Gib an:
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Story Point Schätzung: $e');
+      throw Exception('Error estimating story points: $e');
     }
   }
 
@@ -223,7 +223,7 @@ Erstelle 3–5 konkrete Akzeptanzkriterien, die die Story testbar machen.''';
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Akzeptanzkriterien: $e');
+      throw Exception('Error generating acceptance criteria: $e');
     }
   }
 
@@ -258,7 +258,7 @@ Abschließend: Gesamtempfehlung.''';
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei INVEST-Validierung: $e');
+      throw Exception('Error in INVEST validation: $e');
     }
   }
 
@@ -287,7 +287,7 @@ Identifiziere:
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Impediment-Analyse: $e');
+      throw Exception('Error in impediment analysis: $e');
     }
   }
 
@@ -324,7 +324,7 @@ Bewerte:
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Risiko-Analyse: $e');
+      throw Exception('Error in risk analysis: $e');
     }
   }
 
@@ -351,7 +351,7 @@ Format: Checkliste mit 8–12 Punkten.''';
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei DoD-Generierung: $e');
+      throw Exception('Error generating DoD: $e');
     }
   }
 
@@ -382,7 +382,7 @@ Format: nummerierte Liste.''';
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Action Item Extraktion: $e');
+      throw Exception('Error extracting action items: $e');
     }
   }
 
@@ -418,7 +418,7 @@ Erstelle:
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Reifegrad-Analyse: $e');
+      throw Exception('Error in maturity assessment: $e');
     }
   }
 
@@ -430,11 +430,11 @@ Erstelle:
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Tipp: $e');
+      throw Exception('Error fetching tip: $e');
     }
   }
 
-  /// Baut Kontext-Zusammenfassung aus vergangenen Zeremonien für bessere KI-Antworten
+  /// Builds a context summary from past ceremonies to improve AI responses.
   String buildCeremonyContext(List<String> pastSummaries) {
     if (pastSummaries.isEmpty) return '';
     final summaries = pastSummaries.take(3).join('\n---\n');
@@ -473,7 +473,7 @@ Identifiziere:
       final response = await _model.generateContent([Content.text(prompt)]);
       return response.text ?? _fallback();
     } catch (e) {
-      throw Exception('Fehler bei Retro-Muster-Analyse: $e');
+      throw Exception('Error in retro pattern analysis: $e');
     }
   }
 

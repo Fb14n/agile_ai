@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-/// Liniendiagramm: Sentiment-Score über die Zeit
+/// Line chart: sentiment score over time.
 class SentimentChartWidget extends StatelessWidget {
-  /// Jedes Element: {'date': DateTime, 'score': double, 'ceremony': String}
+  /// Each entry: {'date': DateTime, 'score': double, 'ceremony': String}
   final List<Map<String, dynamic>> data;
 
   const SentimentChartWidget({super.key, required this.data});
@@ -96,9 +96,9 @@ class SentimentChartWidget extends StatelessWidget {
   }
 }
 
-/// Balkendiagramm: Sprint Velocity
+/// Bar chart: sprint velocity.
 class VelocityChartWidget extends StatelessWidget {
-  /// Jedes Element: {'sprint': int, 'velocity': int, 'planned': int?}
+  /// Each entry: {'sprint': int, 'velocity': int, 'planned': int?}
   final List<Map<String, dynamic>> data;
 
   const VelocityChartWidget({super.key, required this.data});

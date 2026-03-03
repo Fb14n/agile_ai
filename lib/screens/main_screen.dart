@@ -5,9 +5,9 @@ import 'package:agile_ai/screens/analytics_screen.dart';
 import 'package:agile_ai/screens/ceremonies_screen.dart';
 import 'package:agile_ai/screens/more_screen.dart';
 
-/// Haupt-Navigationshülle der App mit BottomNavigationBar.
-/// Alle Screens werden in einem IndexedStack gehalten, damit ihr State
-/// erhalten bleibt wenn zwischen Tabs gewechselt wird.
+/// Main navigation shell of the app with a BottomNavigationBar.
+/// All screens are kept in an IndexedStack so their state
+/// is preserved when switching between tabs.
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
