@@ -153,6 +153,9 @@ flutter run -d macos     # macOS
 
 ## 📝 Nächste Schritte (Empfehlungen)
 
+> Eine vollständige, priorisierte Auflistung aller Feature-Ideen mit Anknüpfungspunkten im Code findest du in **[IDEAS.md](IDEAS.md)**.
+
+
 ### Phase 1: Testing & Verbesserung
 - [ ] Unit Tests für Services
 - [ ] Widget Tests für UI

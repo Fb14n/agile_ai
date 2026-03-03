@@ -34,4 +34,9 @@ const _$MessageTypeEnumMap = {
   MessageType.insight: 'insight',
   MessageType.goal: 'goal',
   MessageType.sentiment: 'sentiment',
+  MessageType.actionItem: 'actionItem',
+  MessageType.impediment: 'impediment',
+  MessageType.risk: 'risk',
+  MessageType.assessment: 'assessment',
+  MessageType.tip: 'tip',
 };

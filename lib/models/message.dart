@@ -22,9 +22,7 @@ class Message {
   })  : id = id ?? const Uuid().v4(),
         timestamp = timestamp ?? DateTime.now();
 
-  factory Message.fromJson(Map<String, dynamic> json) =>
-      _$MessageFromJson(json);
-
+  factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
   Map<String, dynamic> toJson() => _$MessageToJson(this);
 }
 
@@ -34,4 +32,9 @@ enum MessageType {
   insight,
   goal,
   sentiment,
+  actionItem,
+  impediment,
+  risk,
+  assessment,
+  tip,
 }

@@ -5,16 +5,10 @@ import 'package:intl/intl.dart';
 class MessageBubble extends StatelessWidget {
   final Message message;
 
-  const MessageBubble({
-    super.key,
-    required this.message,
-  });
+  const MessageBubble({super.key, required this.message});
 
   Color _getBackgroundColor(BuildContext context, MessageType type) {
-    if (message.isUser) {
-      return Theme.of(context).primaryColor;
-    }
-
+    if (message.isUser) return Theme.of(context).primaryColor;
     switch (type) {
       case MessageType.ceremony:
         return Colors.purple[100]!;
@@ -24,6 +18,16 @@ class MessageBubble extends StatelessWidget {
         return Colors.green[100]!;
       case MessageType.sentiment:
         return Colors.orange[100]!;
+      case MessageType.actionItem:
+        return Colors.teal[100]!;
+      case MessageType.impediment:
+        return Colors.red[100]!;
+      case MessageType.risk:
+        return Colors.amber[100]!;
+      case MessageType.assessment:
+        return Colors.indigo[100]!;
+      case MessageType.tip:
+        return Colors.cyan[100]!;
       default:
         return Colors.grey[300]!;
     }
@@ -39,15 +43,50 @@ class MessageBubble extends StatelessWidget {
         return Icons.flag;
       case MessageType.sentiment:
         return Icons.sentiment_satisfied;
+      case MessageType.actionItem:
+        return Icons.check_circle_outline;
+      case MessageType.impediment:
+        return Icons.block;
+      case MessageType.risk:
+        return Icons.warning_amber_outlined;
+      case MessageType.assessment:
+        return Icons.assessment;
+      case MessageType.tip:
+        return Icons.lightbulb_outline;
       default:
         return Icons.chat;
+    }
+  }
+
+  String _getTypeLabel(MessageType type) {
+    switch (type) {
+      case MessageType.ceremony:
+        return 'Zeremonie';
+      case MessageType.insight:
+        return 'Insights';
+      case MessageType.goal:
+        return 'Sprint-Ziel';
+      case MessageType.sentiment:
+        return 'Sentiment';
+      case MessageType.actionItem:
+        return 'Action Items';
+      case MessageType.impediment:
+        return 'Impediment';
+      case MessageType.risk:
+        return 'Risiko';
+      case MessageType.assessment:
+        return 'Assessment';
+      case MessageType.tip:
+        return 'Tipp';
+      default:
+        return '';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final time = DateFormat('HH:mm').format(message.timestamp);
-    
+
     return Align(
       alignment: message.isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -96,7 +135,7 @@ class MessageBubble extends StatelessWidget {
                 message.text,
                 style: TextStyle(
                   color: message.isUser ? Colors.white : Colors.black87,
-                  fontSize: 16,
+                  fontSize: 15,
                 ),
               ),
               const SizedBox(height: 4),
@@ -104,7 +143,7 @@ class MessageBubble extends StatelessWidget {
                 time,
                 style: TextStyle(
                   color: message.isUser ? Colors.white70 : Colors.black45,
-                  fontSize: 12,
+                  fontSize: 11,
                 ),
               ),
             ],
@@ -112,20 +151,5 @@ class MessageBubble extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _getTypeLabel(MessageType type) {
-    switch (type) {
-      case MessageType.ceremony:
-        return 'Zeremonie';
-      case MessageType.insight:
-        return 'Insights';
-      case MessageType.goal:
-        return 'Sprint-Ziel';
-      case MessageType.sentiment:
-        return 'Sentiment';
-      default:
-        return '';
-    }
   }
 }

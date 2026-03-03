@@ -1,10 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:agile_ai/providers/chat_provider.dart';
-import 'package:agile_ai/screens/chat_screen.dart';
+import 'package:agile_ai/providers/settings_provider.dart';
+import 'package:agile_ai/providers/backlog_provider.dart';
+import 'package:agile_ai/providers/team_provider.dart';
+import 'package:agile_ai/providers/analytics_provider.dart';
+import 'package:agile_ai/screens/main_screen.dart';
+import 'package:agile_ai/screens/onboarding_screen.dart';
 import 'package:agile_ai/config/app_config.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (e) {
+    debugPrint('Error loading .env: $e');
+  }
   runApp(const MyApp());
 }
 
@@ -15,7 +29,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ChatProvider()),
+        // Unabhängige Provider zuerst
+        ChangeNotifierProvider(create: (_) => SettingsProvider()),
+        ChangeNotifierProvider(create: (_) => TeamProvider()),
+        ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
+        // Provider mit Abhängigkeit auf SettingsProvider
+        ChangeNotifierProxyProvider<SettingsProvider, ChatProvider>(
+          create: (ctx) => ChatProvider(ctx.read<SettingsProvider>()),
+          update: (_, settings, prev) => prev ?? ChatProvider(settings),
+        ),
+        ChangeNotifierProxyProvider<SettingsProvider, BacklogProvider>(
+          create: (ctx) => BacklogProvider(ctx.read<SettingsProvider>()),
+          update: (_, settings, prev) => prev ?? BacklogProvider(settings),
+        ),
       ],
       child: MaterialApp(
         title: AppConfig.appName,
@@ -55,8 +81,31 @@ class MyApp extends StatelessWidget {
           ),
         ),
         themeMode: ThemeMode.system,
-        home: const ChatScreen(),
+        home: const _AppRoot(),
       ),
+    );
+  }
+}
+
+/// Zeigt einen Ladeindikator, bis die Settings geladen sind,
+/// dann entweder OnboardingScreen oder MainScreen.
+class _AppRoot extends StatelessWidget {
+  const _AppRoot();
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) {
+        if (!settings.isLoaded) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        if (!settings.onboardingComplete) {
+          return const OnboardingScreen();
+        }
+        return const MainScreen();
+      },
     );
   }
 }

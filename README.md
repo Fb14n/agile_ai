@@ -1,176 +1,78 @@
-# 🤖 ScrumMaster AI
+# 🤖 AgileAI – KI-Scrum-Master
 
-An intelligent virtual Scrum Master that guides teams through Scrum ceremonies and provides AI-powered insights.
+> ⚠️ **Wichtig:** Die App benötigt einen Google Gemini API Key.
+> 👉 **[Kostenlosen Key erhalten](https://aistudio.google.com/app/apikey)**
+> 
+> Key beim ersten Start über das Onboarding oder in `lib/config/app_config.dart` eintragen.
+
+Ein intelligenter, KI-gestützter Scrum Master für Flutter. Führt Teams durch alle Scrum-Zeremonien, analysiert Sentiment, verwaltet Backlog und Sprint – alles über Google Gemini.
 
 ## ✨ Features
 
-- 💬 **Intelligent Chatbot** - Communicate with an AI-powered Scrum Master
-- 📅 **Scrum Ceremonies** - Support for all Scrum events:
-  - Daily Standup
-  - Sprint Planning
-  - Sprint Review
-  - Sprint Retrospective
-  - Backlog Refinement
-- 📊 **Sentiment Analysis** - Automatic mood analysis of meeting texts
-- 🎯 **Sprint Goal Generation** - AI-generated Sprint Goals based on Backlog Items
-- 🔍 **Retrospective Analysis** - Evaluation and action recommendations for retros
-- 💾 **Local Storage** - All chat histories are stored locally
-- 🌓 **Dark Mode** - Automatic Dark/Light Mode support
+| Bereich | Features |
+|---|---|
+| **Chat** | Freie Konversation, Spracheingabe, Chat exportieren |
+| **Zeremonien** | Alle 5 Scrum-Events mit KI-Moderation, Tages-Tipps, Zeremonien-Log |
+| **Backlog** | CRUD, Story Point Schätzung, INVEST-Validierung, Akzeptanzkriterien, Sprint-Zuweisung |
+| **Sprint-View** | Kapazitätsanzeige (SP gesamt/erledigt/Fortschritt) |
+| **Analytics** | Sentiment-Verlauf, Velocity-Chart, Team Health Score |
+| **Team** | Teammitglieder CRUD mit Rolle |
+| **Planning Poker** | 5-Phasen-Schätzworkshop mit KI-Moderation |
+| **Glossar** | Offline-Scrum-Lexikon (durchsuchbar) |
+| **Einstellungen** | Sprache (DE/EN), Modell, Persona, Sprint-Nummer |
+| **Onboarding** | Erststart-Einrichtung |
+| **KI-Tools** | Definition of Done, Scrum-Reife-Bewertung, Retro-Muster-Analyse |
 
-## 🚀 Installation & Setup
-
-### Prerequisites
-
-- Flutter SDK (>=3.10.7)
-- Dart SDK
-- Google Gemini API Key
-
-### 1. Install dependencies
+## 🚀 Schnellstart
 
 ```bash
+# Dependencies
 flutter pub get
-```
 
-### 2. Configure API Key
-
-Open `lib/config/app_config.dart` and insert your Google Gemini API Key:
-
-```dart
-static const String geminiApiKey = 'YOUR_API_KEY_HERE';
-```
-
-**How do I get an API Key?**
-
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Sign in with your Google Account
-3. Create a new API Key
-4. Copy the key and paste it into the config
-
-### 3. Generate code
-
-Generate the JSON serialization files:
-
-```bash
+# JSON-Code generieren (nach Modell-Änderungen)
 dart run build_runner build --delete-conflicting-outputs
-```
 
-### 4. Run the app
+# macOS starten
+flutter run -d macos
 
-#### Android / iOS (Simulator/Emulator)
-```bash
+# Windows
+flutter run -d windows
+
+# Android/iOS
 flutter run
 ```
 
-#### Windows
-```bash
-flutter run -d windows
-```
-
-#### macOS
-```bash
-flutter run -d macos
-```
-
-## 🏗️ Project Structure
+## 🏗️ Architektur
 
 ```
-lib/
-├── config/          # App configuration & API Keys
-├── models/          # Data models (Message, ScrumCeremony)
-├── providers/       # State Management (ChatProvider)
-├── screens/         # UI Screens (ChatScreen)
-├── services/        # Backend services (AI, Storage)
-├── widgets/         # Reusable UI components
-└── main.dart        # App entry point
+Screens/Widgets
+      ↕
+Provider (ChangeNotifier)
+  ChatProvider · BacklogProvider · SettingsProvider · AnalyticsProvider · TeamProvider
+      ↕
+Services
+  AiService (Gemini) · StorageService (SharedPreferences) · DatabaseService (SQLite)
 ```
 
-## 🎯 Usage
+Vollständige technische Dokumentation: **[DOCUMENTATION.md](DOCUMENTATION.md)**
 
-### Regular Conversation
-1. Open the app
-2. Type a message
-3. The ScrumMaster AI responds with helpful tips
+## 📱 Plattformen
 
-### Starting a Ceremony
-1. Tap the calendar icon (📅)
-2. Select a ceremony
-3. The AI guides you through the meeting
+✅ macOS · ✅ Windows · ✅ Android · ✅ iOS
 
-### Analyzing Sentiment
-1. Open the menu (⋮)
-2. Select "Analyze Sentiment"
-3. Paste meeting text
-4. Receive a mood rating
+## ⚠️ Hinweise
 
-### Generating a Sprint Goal
-1. Open the menu (⋮)
-2. Select "Generate Sprint Goal"
-3. Paste Backlog Items (one item per line)
-4. Receive an AI-generated Sprint Goal
+- API Key **niemals** in öffentliche Repositories committen
+- macOS: `com.apple.security.network.client` muss in beiden Entitlements-Dateien gesetzt sein
+- Spracheingabe (macOS): zusätzlich `com.apple.security.device.microphone` in `DebugProfile.entitlements`
+- Für KI-Funktionen ist eine Internetverbindung nötig (Glossar funktioniert offline)
 
-### Analyzing a Retrospective
-1. Open the menu (⋮)
-2. Select "Analyze Retrospective"
-3. Paste retro points
-4. Receive a summary and action recommendations
+## 🔧 Tech Stack
 
-## 🤖 LLM Options
+Flutter · Dart · Provider · Google Gemini · fl_chart · sqflite · SharedPreferences · Material Design 3
 
-The app uses **Google Gemini Pro** by default. Alternatively, you can also use:
+## 📚 Ressourcen
 
-### OpenAI GPT-4
-```dart
-// In lib/services/ai_service.dart
-// Use the package: openai_api
-```
-
-### Anthropic Claude
-```dart
-// In lib/services/ai_service.dart
-// Use the package: anthropic_sdk_dart
-```
-
-### Local LLMs (Ollama)
-```dart
-// Install Ollama: https://ollama.ai
-// Use the ollama_dart package
-```
-
-## 📱 Supported Platforms
-
-- ✅ Android
-- ✅ iOS
-- ✅ Windows
-- ✅ macOS
-
-## 🔧 Technology Stack
-
-- **Framework:** Flutter 3.x
-- **State Management:** Provider
-- **LLM:** Google Gemini Pro
-- **Storage:** Shared Preferences
-- **UI:** Material Design 3
-
-## 📝 License
-
-This project was created for educational purposes.
-
-## 🤝 Contribution
-
-Feedback and suggestions for improvement are welcome!
-
-## ⚠️ Notes
-
-- The API Key should NEVER be committed to public repositories
-- For production apps: store the API Key in environment variables
-- The app requires an internet connection for AI features
-
-## 📚 Further Resources
-
-- [Flutter Documentation](https://flutter.dev/docs)
+- [Flutter Docs](https://flutter.dev/docs)
 - [Google Gemini API](https://ai.google.dev/)
 - [Scrum Guide](https://scrumguides.org/)
-
----
-
-Good luck with your virtual Scrum Master! 🚀
