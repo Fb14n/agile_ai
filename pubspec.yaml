@@ -88,6 +88,7 @@ dev_dependencies:
   # Code Generation
   build_runner: ^2.4.8
   json_serializable: ^6.7.1
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -130,3 +131,17 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  android_studio: true
+  image_path: "assets/logo/logo_simple.png"
+  windows:
+    generate: true
+    image_path: "assets/logo/logo_simple.png"
+    icon_size: 256
+  macos:
+    generate: true
+    image_path: "assets/logo/logo_simple.png"
