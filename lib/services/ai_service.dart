@@ -40,9 +40,14 @@ class AiService {
 
   // ─── Chat ─────────────────────────────────────────────────────────────────
 
-  Future<String> sendMessage(String message) async {
+  Future<String> sendMessage(String message, {String? projectContext}) async {
     try {
-      final response = await _chat.sendMessage(Content.text(message));
+      // If project context is provided, prepend it to the message
+      final fullMessage = projectContext != null 
+          ? '$projectContext\n\nUser message: $message'
+          : message;
+      
+      final response = await _chat.sendMessage(Content.text(fullMessage));
       return response.text ?? _fallback();
     } catch (e) {
       throw Exception('Error sending message: $e');
@@ -86,32 +91,30 @@ Bitte gib mir:
 
   // ─── Stateless single-request methods ────────────────────────────────────
 
-  Future<String> analyzeSentiment(String text) async {
+  Future<double> analyzeSentiment(String messageText) async {
     try {
       final prompt = _language == 'en'
           ? '''Analyze the sentiment of this Scrum meeting text.
-Rate it 1–10 (1=very negative, 10=very positive) and give a short explanation.
+Rate it 1–10 (1=very negative, 10=very positive).
 
-Text: "$text"
+Text: "$messageText"
 
-Response format:
-Score: [1-10]
-Reasoning: [short explanation]
-Keywords: [2-3 key emotion words]'''
+Respond with ONLY a number between 1 and 10, nothing else.'''
           : '''Analysiere die Stimmung dieses Scrum-Meeting-Textes.
-Bewerte auf einer Skala 1–10 (1=sehr negativ, 10=sehr positiv) und gib eine kurze Begründung.
+Bewerte auf einer Skala 1–10 (1=sehr negativ, 10=sehr positiv).
 
-Text: "$text"
+Text: "$messageText"
 
-Format:
-Score: [1-10]
-Begründung: [kurze Erklärung]
-Schlüsselwörter: [2-3 Emotions-Wörter]''';
+Antworte NUR mit einer Zahl zwischen 1 und 10, sonst nichts.''';
 
       final response = await _model.generateContent([Content.text(prompt)]);
-      return response.text ?? _fallback();
+      final responseText = response.text ?? '5.0';
+      
+      // Parse the number from response
+      final numericValue = double.tryParse(responseText.trim()) ?? 5.0;
+      return numericValue.clamp(1.0, 10.0);
     } catch (e) {
-      throw Exception('Error in sentiment analysis: $e');
+      return 5.0; // Neutral fallback
     }
   }
 

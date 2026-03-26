@@ -1,92 +1,272 @@
-# 🤖 AgileAI – AI-Powered Scrum Master
+# AgileAI - Project-Centric Scrum Management
 
 > ⚠️ **Important:** This app requires a Google Gemini API key to function.
-> 👉 **[Get a free key at Google AI Studio](https://aistudio.google.com/app/apikey)**
+> 👉 **[Get a free key at Google AI Studio](https://makersuite.google.com/app/apikey)**
 >
-> Enter the key during the onboarding flow on first launch, or set it directly in `lib/config/app_config.dart`.
+> Create a `.env` file in the project root with your key (see Installation step 3).
 
-An intelligent, AI-backed Scrum Master assistant built with Flutter. Guides teams through all Scrum ceremonies, analyzes sentiment, manages the backlog and sprint — all powered by Google Gemini.
+**AgileAI** ist eine Flutter-Anwendung, die als KI-gestützter Scrum Master fungiert. Teams können projekt-spezifische Scrum Ceremonies durchführen, wobei die gesamte Historie als Kontext gespeichert wird für kontinuierliche KI-Unterstützung.
 
-## ✨ Features
+## 🎯 Features
 
-| Area | Features |
-|---|---|
-| **Chat** | Free conversation with the AI Scrum Master, voice input, chat export |
-| **Ceremonies** | All 5 Scrum events with AI facilitation, daily tips, ceremony log |
-| **Backlog** | CRUD, AI story point estimation, INVEST validation, acceptance criteria, sprint assignment |
-| **Sprint view** | Capacity display (total SP / completed SP / progress) |
-| **Analytics** | Sentiment history chart, velocity chart, team health score |
-| **Team** | Team member CRUD with role |
-| **Planning Poker** | 5-phase estimation workshop with AI moderation |
-| **Glossary** | Offline, searchable Scrum glossary |
-| **Settings** | Language (DE/EN), AI model, persona, sprint number |
-| **Onboarding** | First-launch setup wizard |
-| **AI tools** | Definition of Done generator, Scrum maturity assessment, retro pattern analysis |
+### Projekt-Management
+- ✅ **Projekt-zentrierte Struktur**: Jedes Projekt hat eigene Sprints, User Stories, Meetings und Kontext
+- ✅ **Fantasy-Projekt**: Beim ersten Start wird automatisch das Demo-Projekt "QuantumHealth" angelegt
+- ✅ **Statistiken**: Projekt-spezifische und globale Statistiken
 
-## 🚀 Quick Start
+### Scrum Ceremonies
+- ✅ **Daily Standup** - Schnelles Team-Sync mit Blocker-Erkennung
+- ✅ **Sprint Planning** - Sprint-Ziele definieren und Stories auswählen
+- ✅ **Sprint Review** - Increment präsentieren und Feedback sammeln
+- ✅ **Sprint Retrospective** - Reflexion mit Sentiment-Analyse
+- ✅ **Backlog Refinement** - User Stories schätzen und priorisieren
+
+### KI-Features
+- ✅ **Kontext-Gedächtnis**: Alle Meetings werden gespeichert und als Kontext genutzt
+- ✅ **Sentiment-Analyse**: Automatische Team-Stimmungs-Erkennung
+- ✅ **Action Items**: KI extrahiert Handlungsempfehlungen
+- ✅ **Editierbarer Kontext**: Projekt-spezifische Informationen können manuell angepasst werden
+
+### Datenbank
+- ✅ **SQLite** mit automatischer Schema-Migration
+- ✅ **Automatische Initialisierung** beim ersten App-Start
+- ✅ **Seed-Data**: Fantasy-Projekt mit realistischen Daten
+
+## 📋 Prerequisites
+
+- **Flutter SDK** 3.10.7 oder höher
+- **Dart** 3.10.7 oder höher
+- **Google Gemini API Key** ([Hier erhalten](https://makersuite.google.com/app/apikey))
+
+## 🚀 Installation
+
+### 1. Repository klonen
 
 ```bash
-# Install dependencies
+git clone <repository-url>
+cd agile_ai
+```
+
+### 2. Dependencies installieren
+
+```bash
 flutter pub get
+```
 
-# Generate JSON serialization code (required after model changes)
+### 3. API Key konfigurieren
+
+Erstelle eine `.env` Datei im Projekt-Root:
+
+```bash
+cp .env.example .env
+```
+
+Öffne `.env` und trage deinen Gemini API Key ein:
+
+```
+GEMINI_API_KEY=your_actual_api_key_here
+```
+
+**⚠️ Wichtig**: Die `.env` Datei wird nicht ins Git committed! Nutze `.env.example` als Template.
+
+### 4. JSON Serialization Code generieren
+
+```bash
 dart run build_runner build --delete-conflicting-outputs
+```
 
-# Run on macOS
+### 5. App starten
+
+```bash
+# macOS
 flutter run -d macos
 
-# Run on Windows
+# Windows
 flutter run -d windows
 
-# Run on Android / iOS
-flutter run
+# Android
+flutter run -d <device-id>
+
+# iOS
+flutter run -d <device-id>
 ```
 
-## 🏗️ Architecture
-
-```
-Screens / Widgets
-       ↕
-Providers (ChangeNotifier)
-  ChatProvider · BacklogProvider · SettingsProvider · AnalyticsProvider · TeamProvider
-       ↕
-Services
-  AiService (Gemini) · StorageService (SharedPreferences) · DatabaseService (SQLite)
-```
-
-Full technical documentation (in German): **[DOCUMENTATION.md](DOCUMENTATION.md)**
-
-## 📁 Project Structure
+## 📁 Projekt-Struktur
 
 ```
 lib/
-├── config/          # Central config: API key, model, prompts, ceremonies, glossary
-├── models/          # Data models with JSON serialization (*.g.dart)
-├── providers/       # State management (ChangeNotifier)
-├── screens/         # All UI screens
-├── services/        # AI, storage, and database services
-├── widgets/         # Reusable UI components
-└── main.dart        # App entry point, MultiProvider setup
+├── config/               # App-Konfiguration (Theme, AppConfig)
+├── models/               # Datenmodelle (@JsonSerializable)
+│   ├── project.dart
+│   ├── sprint.dart
+│   ├── user_story.dart
+│   ├── meeting.dart
+│   ├── meeting_message.dart
+│   ├── project_team_member.dart
+│   └── project_context.dart
+├── providers/            # State Management (Provider)
+│   ├── project_provider.dart
+│   ├── meeting_provider.dart
+│   ├── context_provider.dart
+│   ├── settings_provider.dart
+│   └── analytics_provider.dart
+├── screens/              # UI Screens
+│   ├── project_list_screen.dart
+│   ├── project_detail_screen.dart
+│   ├── meeting_screen.dart
+│   ├── global_stats_screen.dart
+│   └── settings_screen.dart
+├── services/             # Business Logic
+│   ├── database_service.dart    # SQLite Wrapper
+│   ├── seed_service.dart        # Demo-Daten
+│   ├── project_service.dart     # Projekt-CRUD
+│   ├── meeting_service.dart     # Meeting-Management
+│   └── ai_service.dart          # Gemini Integration
+├── widgets/              # Wiederverwendbare UI-Komponenten
+└── main.dart             # Entry Point
 ```
 
-## 📱 Supported Platforms
+## 🗄️ Datenbank
 
-✅ macOS · ✅ Windows · ✅ Android · ✅ iOS
+### Automatische Initialisierung
 
-## ⚠️ Important Notes
+Die Datenbank wird beim ersten App-Start automatisch initialisiert:
 
-- **Never commit your API key** to a public repository — use environment variables in production.
-- **macOS sandbox:** `com.apple.security.network.client` must be set in both entitlements files for API calls to work.
-- **macOS voice input:** additionally requires `com.apple.security.device.microphone` in `DebugProfile.entitlements`.
-- AI features require an active internet connection. The glossary works fully offline.
-- After changing `pubspec.yaml` or entitlements, a full restart (`flutter run`) is required — hot restart is not enough.
+1. **Schema-Erstellung**: Alle Tabellen werden angelegt (v1 Migration)
+2. **Seed-Data**: Das Fantasy-Projekt "QuantumHealth" wird eingefügt (v2 Migration)
+3. **Fertig**: Die App ist sofort nutzbar!
 
-## 🔧 Tech Stack
+### Schema
 
-Flutter · Dart · Provider · Google Gemini · fl_chart · sqflite · SharedPreferences · Material Design 3
+Die Datenbank besteht aus 7 Tabellen:
 
-## 📚 Resources
+- `projects` - Projekt-Stammdaten
+- `sprints` - Sprint-Informationen
+- `user_stories` - User Stories / Backlog Items
+- `meetings` - Meeting-Historie
+- `meeting_messages` - Chat-Verlauf in Meetings
+- `project_team_members` - Team-Mitglieder
+- `project_context` - Editierbarer Projekt-Kontext
 
-- [Flutter Documentation](https://flutter.dev/docs)
-- [Google Gemini API](https://ai.google.dev/)
-- [Scrum Guide](https://scrumguides.org/)
+Details siehe [DATABASE.md](DATABASE.md)
+
+## 🎭 Fantasy-Projekt "QuantumHealth"
+
+Beim ersten Start wird automatisch ein Demo-Projekt angelegt:
+
+- **Name**: QuantumHealth - Smart Medical Platform
+- **Team**: 6 Mitglieder (Alice, Bob, Charlie, Diana, Eve, Frank)
+- **Sprints**: 3 Sprints (Sprint 3 aktiv)
+- **User Stories**: 8 Stories (3 Done, 2 In Progress, 3 Backlog)
+- **Meetings**: 3 dokumentierte Meetings mit Chat-Verläufen
+  - Sprint Planning
+  - Daily Standup
+  - Sprint Retrospective
+
+Dies dient als Onboarding und zeigt die Funktionalität der App.
+
+## 🛠️ Development
+
+### Commands
+
+```bash
+# Dependencies installieren
+flutter pub get
+
+# JSON Serialization Code generieren
+dart run build_runner build --delete-conflicting-outputs
+
+# Code analysieren
+flutter analyze
+
+# Tests ausführen
+flutter test
+
+# App bauen
+flutter build macos     # macOS
+flutter build windows   # Windows
+flutter build apk       # Android
+flutter build ios       # iOS
+```
+
+### Code Generation
+
+Nach Änderungen an Models mit `@JsonSerializable`:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+Dies generiert die `*.g.dart` Dateien für JSON-Serialisierung.
+
+## ⚙️ Konfiguration
+
+### AI Model wechseln
+
+In `lib/config/app_config.dart`:
+
+```dart
+static const String defaultModel = 'gemma-3-27b-it';  // Ändern auf gewünschtes Modell
+```
+
+Verfügbare Models: `gemini-2.5-flash`, `gemini-2.0-flash`, `gemma-3-27b-it`, etc.
+
+### System Prompt anpassen
+
+In `lib/config/app_config.dart` in der `systemPrompt()` Methode.
+
+### Sprache ändern
+
+Über die Settings-Screen in der App oder direkt in `AppConfig.defaultLanguage`.
+
+## 🔒 Sicherheit
+
+- ✅ API Keys werden **NICHT** ins Git committed (`.env` ist in `.gitignore`)
+- ✅ Nutze `.env.example` als Template
+- ✅ Datenbank-Dateien (`.db`) werden nicht committed
+- ✅ Für Produktion: API Key in Umgebungsvariablen auslagern
+
+## 🐛 Troubleshooting
+
+### "No .env file found"
+→ Erstelle `.env` Datei mit `GEMINI_API_KEY=...`
+
+### "API key not valid"
+→ Prüfe ob der Key korrekt in `.env` eingetragen ist
+
+### macOS: Network requests fail
+→ Prüfe Entitlements in `macos/Runner/*.entitlements` - `com.apple.security.network.client` muss vorhanden sein
+
+### Build-Fehler nach Model-Änderungen
+→ Führe `dart run build_runner build --delete-conflicting-outputs` aus
+
+### Datenbank zurücksetzen
+→ Lösche die `.db` Datei im App-Verzeichnis und starte neu
+
+## 📖 Weitere Dokumentation
+
+- [DATABASE.md](DATABASE.md) - Detaillierte Datenbank-Dokumentation
+- [SETUP_GUIDE.md](SETUP_GUIDE.md) - Plattform-spezifische Setup-Anleitung
+
+## 🤝 Contributing
+
+1. Fork das Repository
+2. Erstelle einen Feature-Branch (`git checkout -b feature/amazing-feature`)
+3. Commit deine Änderungen (`git commit -m 'Add amazing feature'`)
+4. Push zum Branch (`git push origin feature/amazing-feature`)
+5. Erstelle einen Pull Request
+
+## 📄 License
+
+MIT License
+
+## 🙏 Credits
+
+- **AI Model**: Google Gemini
+- **Framework**: Flutter & Dart
+- **State Management**: Provider
+- **Database**: SQLite
+
+---
+
+Made with ❤️ by the AgileAI Team

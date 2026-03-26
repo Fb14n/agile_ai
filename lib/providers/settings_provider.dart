@@ -17,6 +17,7 @@ class SettingsProvider extends ChangeNotifier {
   String get language => _settings.language;
   String get aiModel => _settings.aiModel;
   String get personaStyle => _settings.personaStyle;
+  String get themeMode => _settings.themeMode;
   bool get onboardingComplete => _settings.onboardingComplete;
   int get currentSprintNumber => _settings.currentSprintNumber;
   bool get isLoaded => _isLoaded;
@@ -58,6 +59,12 @@ class SettingsProvider extends ChangeNotifier {
   Future<void> setPersonaStyle(String persona) async {
     _settings = _settings.copyWith(personaStyle: persona);
     _sharedAiService?.reconfigure(persona: persona);
+    await _storage.saveSettings(_settings);
+    notifyListeners();
+  }
+
+  Future<void> setThemeMode(String mode) async {
+    _settings = _settings.copyWith(themeMode: mode);
     await _storage.saveSettings(_settings);
     notifyListeners();
   }

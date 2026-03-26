@@ -1,71 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:agile_ai/providers/settings_provider.dart';
-import 'package:agile_ai/providers/analytics_provider.dart';
 import 'package:agile_ai/screens/settings_screen.dart';
-import 'package:agile_ai/screens/team_screen.dart';
 import 'package:agile_ai/screens/glossary_screen.dart';
 import 'package:agile_ai/screens/planning_poker_screen.dart';
 
-/// "More" tab: links to Settings, Team, Glossary, and Planning Poker.
+/// "More" tab: links to Settings, Glossary, and Planning Poker.
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<SettingsProvider, AnalyticsProvider>(
-      builder: (context, settings, analytics, _) {
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) {
         return Scaffold(
           appBar: AppBar(title: const Text('Mehr')),
           body: ListView(
             children: [
-              // ── Team health summary ──────────────────────────────────────
-              Container(
-                margin: const EdgeInsets.all(16),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.primaryContainer,
-                      Theme.of(context)
-                          .colorScheme
-                          .secondaryContainer,
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.favorite, color: Colors.red, size: 32),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          analytics.healthLabel,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        Text(
-                          'Ø Sentiment: ${analytics.averageSentiment.toStringAsFixed(1)} | '
-                          '${analytics.totalCeremonies} Zeremonien',
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
               // ── Main menu ────────────────────────────────────────────────
               _SectionHeader('Verwaltung'),
-              _NavTile(
-                icon: Icons.people_outline,
-                title: 'Team verwalten',
-                subtitle: 'Mitglieder hinzufügen und Rollen festlegen',
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const TeamScreen())),
-              ),
               _NavTile(
                 icon: Icons.settings_outlined,
                 title: 'Einstellungen',

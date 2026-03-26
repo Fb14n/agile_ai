@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:agile_ai/providers/settings_provider.dart';
-import 'package:agile_ai/providers/team_provider.dart';
 import 'package:agile_ai/config/app_config.dart';
 
 /// Planning Poker screen: AI-supported estimation workflow.
@@ -9,7 +8,7 @@ import 'package:agile_ai/config/app_config.dart';
 /// Flow:
 /// 1. Enter user story
 /// 2. AI provides initial estimate and reasoning
-/// 3. Each team member enters their estimate
+/// 3. Enter team estimates manually
 /// 4. On divergence: AI moderates the discussion
 /// 5. Finalize the estimate
 class PlanningPokerScreen extends StatefulWidget {
@@ -46,12 +45,8 @@ class _PlanningPokerScreenState extends State<PlanningPokerScreen> {
       final result =
           await ai.estimateStoryPoints(_storyCtrl.text.trim());
       setState(() => _aiSuggestion = result);
-      // Initialize team votes
-      final members = context.read<TeamProvider>().memberNames;
-      for (final m in members) {
-        _votes[m] = null;
-      }
-      if (members.isEmpty) _votes['Ich'] = null;
+      // Initialize default team member for voting
+      _votes['Team Member 1'] = null;
       _phase = _Phase.voting;
     } catch (e) {
       setState(() => _aiSuggestion = 'Fehler: $e');
