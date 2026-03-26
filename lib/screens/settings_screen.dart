@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:agile_ai/providers/settings_provider.dart';
 import 'package:agile_ai/config/app_config.dart';
 
-/// Settings screen: language, AI model, persona, sprint number, data.
+/// Settings screen: AI model, persona, theme, data management.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -12,72 +12,46 @@ class SettingsScreen extends StatelessWidget {
     return Consumer<SettingsProvider>(
       builder: (context, settings, _) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Einstellungen')),
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context),
+            ),
+            title: const Row(
+              children: [
+                Icon(Icons.settings),
+                SizedBox(width: 8),
+                Text('Einstellungen'),
+              ],
+            ),
+          ),
           body: ListView(
             children: [
-              // ── Language ─────────────────────────────────────────────────
-              _SectionHeader('Sprache & Stil'),
-              ListTile(
-                leading: const Icon(Icons.language),
-                title: const Text('Sprache'),
-                subtitle: Text(
-                    settings.language == 'de' ? 'Deutsch' : 'English'),
-                trailing: SegmentedButton<String>(
-                  segments: const [
-                    ButtonSegment(value: 'de', label: Text('DE')),
-                    ButtonSegment(value: 'en', label: Text('EN')),
-                  ],
-                  selected: {settings.language},
-                  onSelectionChanged: (sel) =>
-                      settings.setLanguage(sel.first),
-                ),
-              ),
-
-              // ── AI model ───────────────────────────────────────────────
+              // ── AI Configuration ──────────────────────────────────────
               _SectionHeader('KI-Konfiguration'),
               ListTile(
                 leading: const Icon(Icons.smart_toy_outlined),
                 title: const Text('KI-Modell'),
                 subtitle: Text(_modelLabel(settings.aiModel)),
+                trailing: const Icon(Icons.chevron_right),
                 onTap: () => _showModelPicker(context, settings),
               ),
-
-              // ── Persona ─────────────────────────────────────────────────
               ListTile(
                 leading: const Icon(Icons.psychology_outlined),
-                title: const Text('Kommunikationsstil (Persona)'),
+                title: const Text('Kommunikationsstil'),
                 subtitle: Text(_personaLabel(settings.personaStyle)),
+                trailing: const Icon(Icons.chevron_right),
                 onTap: () => _showPersonaPicker(context, settings),
               ),
 
-              // ── Sprint ──────────────────────────────────────────────────
-              _SectionHeader('Sprint'),
+              // ── Appearance ────────────────────────────────────────────
+              _SectionHeader('Darstellung'),
               ListTile(
-                leading: const Icon(Icons.speed),
-                title: const Text('Aktueller Sprint'),
-                subtitle: Text('Sprint ${settings.currentSprintNumber}'),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.remove_circle_outline),
-                      onPressed: settings.currentSprintNumber > 1
-                          ? () => settings.setSprintNumber(
-                              settings.currentSprintNumber - 1)
-                          : null,
-                    ),
-                    Text(
-                      '${settings.currentSprintNumber}',
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.add_circle_outline),
-                      onPressed: () => settings.setSprintNumber(
-                          settings.currentSprintNumber + 1),
-                    ),
-                  ],
-                ),
+                leading: const Icon(Icons.dark_mode_outlined),
+                title: const Text('Design'),
+                subtitle: Text(_themeModeLabel(settings.themeMode)),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showThemePicker(context, settings),
               ),
 
               // ── Data ───────────────────────────────────────────────────
@@ -120,6 +94,17 @@ class SettingsScreen extends StatelessWidget {
         .where((p) => p['id'] == personaId)
         .firstOrNull;
     return match?['label'] ?? personaId;
+  }
+
+  String _themeModeLabel(String themeMode) {
+    switch (themeMode) {
+      case 'light':
+        return 'Hell';
+      case 'dark':
+        return 'Dunkel';
+      default:
+        return 'System';
+    }
   }
 
   void _showModelPicker(BuildContext context, SettingsProvider settings) {
@@ -174,6 +159,53 @@ class SettingsScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+
+  void _showThemePicker(BuildContext context, SettingsProvider settings) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(16),
+            child: Text('Design wählen',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          ),
+          RadioListTile<String>(
+            value: 'system',
+            groupValue: settings.themeMode,
+            title: const Text('System'),
+            secondary: const Icon(Icons.settings_suggest),
+            onChanged: (val) {
+              if (val != null) settings.setThemeMode(val);
+              Navigator.pop(context);
+            },
+          ),
+          RadioListTile<String>(
+            value: 'light',
+            groupValue: settings.themeMode,
+            title: const Text('Hell'),
+            secondary: const Icon(Icons.light_mode),
+            onChanged: (val) {
+              if (val != null) settings.setThemeMode(val);
+              Navigator.pop(context);
+            },
+          ),
+          RadioListTile<String>(
+            value: 'dark',
+            groupValue: settings.themeMode,
+            title: const Text('Dunkel'),
+            secondary: const Icon(Icons.dark_mode),
+            onChanged: (val) {
+              if (val != null) settings.setThemeMode(val);
+              Navigator.pop(context);
+            },
           ),
           const SizedBox(height: 16),
         ],

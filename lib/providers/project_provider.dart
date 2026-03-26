@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:agile_ai/models/project.dart';
 import 'package:agile_ai/models/sprint.dart';
 import 'package:agile_ai/models/user_story.dart';
+import 'package:agile_ai/models/meeting.dart';
 import 'package:agile_ai/models/project_team_member.dart';
 import 'package:agile_ai/services/project_service.dart';
 
@@ -16,6 +17,7 @@ class ProjectProvider with ChangeNotifier {
   Project? _currentProject;
   List<Sprint> _sprints = [];
   List<UserStory> _userStories = [];
+  List<Meeting> _meetings = [];
   List<ProjectTeamMember> _teamMembers = [];
   bool _isLoading = false;
   String? _error;
@@ -29,6 +31,7 @@ class ProjectProvider with ChangeNotifier {
   List<UserStory> get userStories => _userStories;
   List<UserStory> get backlogStories =>
       _userStories.where((s) => s.sprintId == null).toList();
+  List<Meeting> get meetings => _meetings;
   List<ProjectTeamMember> get teamMembers => _teamMembers;
   bool get isLoading => _isLoading;
   String? get error => _error;
@@ -66,6 +69,7 @@ class ProjectProvider with ChangeNotifier {
   Future<void> _loadProjectData(String projectId) async {
     _sprints = await _projectService.getSprintsByProject(projectId);
     _userStories = await _projectService.getUserStoriesByProject(projectId);
+    _meetings = await _projectService.getMeetingsByProject(projectId);
     _teamMembers = await _projectService.getTeamMembers(projectId);
   }
 
@@ -131,6 +135,38 @@ class ProjectProvider with ChangeNotifier {
   }
 
   // ─── Sprint Management ─────────────────────────────────────────────────────
+
+  Future<void> startNewSprint(String goal) async {
+    if (_currentProject == null) return;
+    
+    _setLoading(true);
+    try {
+      final nextSprintNumber = _currentProject!.currentSprintNumber + 1;
+      final sprint = Sprint(
+        projectId: _currentProject!.id,
+        sprintNumber: nextSprintNumber,
+        goal: goal,
+        status: SprintStatus.active,
+        startDate: DateTime.now(),
+        endDate: DateTime.now().add(Duration(days: _currentProject!.sprintLengthWeeks * 7)),
+      );
+      
+      await _projectService.createSprint(sprint);
+      
+      // Update project's current sprint number
+      await _projectService.updateProject(
+        _currentProject!.copyWith(currentSprintNumber: nextSprintNumber),
+      );
+      
+      _currentProject = _currentProject!.copyWith(currentSprintNumber: nextSprintNumber);
+      await _loadProjectData(_currentProject!.id);
+      _error = null;
+    } catch (e) {
+      _error = 'Failed to start sprint: $e';
+    } finally {
+      _setLoading(false);
+    }
+  }
 
   Future<void> createSprint(Sprint sprint) async {
     _setLoading(true);

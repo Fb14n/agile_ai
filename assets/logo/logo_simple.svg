@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00BCD4"/>
+      <stop offset="100%" style="stop-color:#009688"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Sprint Circle -->
+  <circle cx="128" cy="128" r="110" fill="none" stroke="url(#grad)" stroke-width="16" stroke-linecap="round" stroke-dasharray="550 150" transform="rotate(-45 128 128)"/>
+  
+  <!-- Stylized A -->
+  <path d="M128,50 L68,190 M128,50 L188,190 M88,140 L168,140" fill="none" stroke="url(#grad)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- AI Dot -->
+  <circle cx="128" cy="50" r="14" fill="#00BCD4"/>
+</svg>

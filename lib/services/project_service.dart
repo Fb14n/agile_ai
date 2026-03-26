@@ -1,6 +1,7 @@
 import 'package:agile_ai/models/project.dart';
 import 'package:agile_ai/models/sprint.dart';
 import 'package:agile_ai/models/user_story.dart';
+import 'package:agile_ai/models/meeting.dart';
 import 'package:agile_ai/models/project_team_member.dart';
 import 'package:agile_ai/models/project_context.dart';
 import 'package:agile_ai/services/database_service.dart';
@@ -146,6 +147,12 @@ class ProjectService {
 
   Future<void> removeTeamMember(String id) async {
     await _dbService.deleteTeamMember(id);
+  }
+
+  // ─── Meetings ──────────────────────────────────────────────────────────────
+
+  Future<List<Meeting>> getMeetingsByProject(String projectId) async {
+    return await _dbService.loadMeetingsByProject(projectId);
   }
 
   // ─── Project Context ───────────────────────────────────────────────────────

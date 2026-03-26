@@ -437,6 +437,16 @@ Erstelle:
     }
   }
 
+  /// Generate content from a prompt (for project AI chat)
+  Future<String?> generateContent(String prompt) async {
+    try {
+      final response = await _model.generateContent([Content.text(prompt)]);
+      return response.text;
+    } catch (e) {
+      throw Exception('Error generating content: $e');
+    }
+  }
+
   /// Builds a context summary from past ceremonies to improve AI responses.
   String buildCeremonyContext(List<String> pastSummaries) {
     if (pastSummaries.isEmpty) return '';

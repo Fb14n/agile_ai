@@ -22,8 +22,7 @@ class MoreScreen extends StatelessWidget {
               _NavTile(
                 icon: Icons.settings_outlined,
                 title: 'Einstellungen',
-                subtitle:
-                    '${settings.language == "de" ? "Deutsch" : "English"} · ${_shortModelName(settings.aiModel)}',
+                subtitle: 'KI-Modell: ${_shortModelName(settings.aiModel)}',
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (_) => const SettingsScreen())),
               ),

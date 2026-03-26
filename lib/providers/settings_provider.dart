@@ -3,7 +3,7 @@ import 'package:agile_ai/models/app_settings.dart';
 import 'package:agile_ai/services/storage_service.dart';
 import 'package:agile_ai/services/ai_service.dart';
 
-/// Manages all app-wide settings: language, AI model, persona.
+/// Manages all app-wide settings: AI model, persona, theme.
 /// All other providers hold a reference to this provider so they can
 /// reconfigure AiService whenever settings change.
 class SettingsProvider extends ChangeNotifier {
@@ -14,12 +14,10 @@ class SettingsProvider extends ChangeNotifier {
   bool _isLoaded = false;
 
   AppSettings get settings => _settings;
-  String get language => _settings.language;
   String get aiModel => _settings.aiModel;
   String get personaStyle => _settings.personaStyle;
   String get themeMode => _settings.themeMode;
   bool get onboardingComplete => _settings.onboardingComplete;
-  int get currentSprintNumber => _settings.currentSprintNumber;
   bool get isLoaded => _isLoaded;
 
   SettingsProvider() {
@@ -35,18 +33,11 @@ class SettingsProvider extends ChangeNotifier {
   /// Returns a (shared) AiService configured with the current settings.
   AiService get aiService {
     _sharedAiService ??= AiService(
-      language: _settings.language,
+      language: 'de', // Fixed to German
       persona: _settings.personaStyle,
       modelId: _settings.aiModel,
     );
     return _sharedAiService!;
-  }
-
-  Future<void> setLanguage(String lang) async {
-    _settings = _settings.copyWith(language: lang);
-    _sharedAiService?.reconfigure(language: lang);
-    await _storage.saveSettings(_settings);
-    notifyListeners();
   }
 
   Future<void> setAiModel(String modelId) async {
@@ -71,12 +62,6 @@ class SettingsProvider extends ChangeNotifier {
 
   Future<void> completeOnboarding() async {
     _settings = _settings.copyWith(onboardingComplete: true);
-    await _storage.saveSettings(_settings);
-    notifyListeners();
-  }
-
-  Future<void> setSprintNumber(int number) async {
-    _settings = _settings.copyWith(currentSprintNumber: number);
     await _storage.saveSettings(_settings);
     notifyListeners();
   }

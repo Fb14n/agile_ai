@@ -11,8 +11,10 @@
 
 ### Projekt-Management
 - ✅ **Projekt-zentrierte Struktur**: Jedes Projekt hat eigene Sprints, User Stories, Meetings und Kontext
+- ✅ **Projekt-Übersicht**: Dashboard mit Zusammenfassung, Sprint-Fortschritt und Quick Actions
+- ✅ **Projekt-Statistiken**: Detaillierte Auswertungen (Meetings, Velocity, Story Points)
 - ✅ **Fantasy-Projekt**: Beim ersten Start wird automatisch das Demo-Projekt "QuantumHealth" angelegt
-- ✅ **Statistiken**: Projekt-spezifische und globale Statistiken
+- ✅ **Globale Statistiken**: Überblick über alle Projekte auf einer Subpage
 
 ### Scrum Ceremonies
 - ✅ **Daily Standup** - Schnelles Team-Sync mit Blocker-Erkennung
@@ -21,11 +23,24 @@
 - ✅ **Sprint Retrospective** - Reflexion mit Sentiment-Analyse
 - ✅ **Backlog Refinement** - User Stories schätzen und priorisieren
 
+### Meeting-Verlauf
+- ✅ **Meeting-Historie**: Liste aller Meetings pro Projekt mit Datum, Typ und Dauer
+- ✅ **Chat-Verlauf**: Vollständiger Chat-Verlauf jedes Meetings einsehbar
+- ✅ **Zusammenfassungen**: KI-generierte Zusammenfassungen und Action Items
+- ✅ **Sentiment-Tracking**: Team-Stimmung wird visualisiert
+
 ### KI-Features
 - ✅ **Kontext-Gedächtnis**: Alle Meetings werden gespeichert und als Kontext genutzt
 - ✅ **Sentiment-Analyse**: Automatische Team-Stimmungs-Erkennung
 - ✅ **Action Items**: KI extrahiert Handlungsempfehlungen
+- ✅ **Projekt-AI-Assistent**: Fragen zum Projekt stellen (ohne Meeting-Kontext)
 - ✅ **Editierbarer Kontext**: Projekt-spezifische Informationen können manuell angepasst werden
+
+### UI/UX
+- ✅ **Icons überall**: Intuitive Icons für bessere Orientierung
+- ✅ **Tab-basierte Navigation**: Übersichtliche Projekt-Detailansicht mit Tabs
+- ✅ **Dark Mode**: Automatischer oder manueller Theme-Wechsel
+- ✅ **Deutsche Oberfläche**: Vollständig deutsche UI
 
 ### Datenbank
 - ✅ **SQLite** mit automatischer Schema-Migration
@@ -215,9 +230,28 @@ Verfügbare Models: `gemini-2.5-flash`, `gemini-2.0-flash`, `gemma-3-27b-it`, et
 
 In `lib/config/app_config.dart` in der `systemPrompt()` Methode.
 
-### Sprache ändern
+### Theme ändern
 
-Über die Settings-Screen in der App oder direkt in `AppConfig.defaultLanguage`.
+Über die Settings-Screen in der App: System / Hell / Dunkel
+
+## 🖼️ App-Struktur
+
+```
+Startseite (ProjectListScreen)
+├── Projekt-Karte → Klick → Projekt-Detail (Tabs)
+│   ├── Übersicht (Dashboard, Quick Actions)
+│   ├── Meetings (Meeting-Historie, Chat-Verlauf)
+│   ├── Backlog (User Stories nach Status)
+│   └── AI-Chat (Projekt-spezifische Fragen)
+├── + Neues Projekt erstellen
+├── Menü (PopupMenu)
+│   ├── Projekt bearbeiten
+│   ├── Projekt archivieren
+│   └── Projekt löschen
+└── More (Drawer)
+    ├── Globale Statistiken
+    └── Einstellungen
+```
 
 ## 🔒 Sicherheit
 
