@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -36,7 +38,25 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> _initSpeech() async {
-    _speechAvailable = await _speech.initialize();
+    final platform = defaultTargetPlatform;
+    final supported = platform == TargetPlatform.android ||
+        platform == TargetPlatform.iOS ||
+        platform == TargetPlatform.macOS;
+
+    if (!supported) {
+      _speechAvailable = false;
+      if (mounted) setState(() {});
+      return;
+    }
+
+    try {
+      _speechAvailable = await _speech.initialize();
+    } on MissingPluginException {
+      _speechAvailable = false;
+    } catch (_) {
+      _speechAvailable = false;
+    }
+
     if (mounted) setState(() {});
   }
 
@@ -116,10 +136,16 @@ class _ChatScreenState extends State<ChatScreen> {
   void _showOptionsMenu() {
     showModalBottomSheet(
       context: context,
-      builder: (_) => Container(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (_) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.7,
+        minChildSize: 0.4,
+        maxChildSize: 0.95,
+        builder: (context, scrollController) => ListView(
+          controller: scrollController,
+          padding: const EdgeInsets.all(8),
           children: [
             ListTile(
               leading: const Icon(Icons.event),

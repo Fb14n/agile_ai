@@ -16,28 +16,52 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<_OnboardingPage> _pages = const [
     _OnboardingPage(
-      icon: Icons.smart_toy_outlined,
+      icon: Icons.waving_hand,
       title: 'Willkommen bei AgileAI',
       subtitle: 'Dein intelligenter KI-Scrum-Master. Er führt dich durch alle Scrum-Zeremonien, analysiert die Team-Stimmung und hilft dir, bessere Sprints zu planen.',
       color: Color(0xFF6750A4),
+      features: [
+        'Daily Standups moderieren',
+        'Sprint Planning unterstützen',
+        'Retrospektiven auswerten',
+        'Team-Stimmung analysieren',
+      ],
     ),
     _OnboardingPage(
-      icon: Icons.event_note,
-      title: 'Scrum-Zeremonien',
-      subtitle: 'Starte Daily Standups, Sprint Planning, Reviews, Retrospektiven und Backlog Refinement – mit eingebautem Timer und KI-Moderation.',
+      icon: Icons.psychology,
+      title: 'So funktioniert deine KI',
+      subtitle: 'Gemini ist dein virtueller Scrum Master mit speziellen Fähigkeiten:',
       color: Color(0xFF0077B6),
+      features: [
+        '✓ Strukturierte Fragen stellen',
+        '✓ Blocker erkennen und hervorheben',
+        '✓ Meeting-Zusammenfassungen erstellen',
+        '✓ Sprint-Ziele formulieren',
+        '✓ Team-Feedback transparent verarbeiten',
+      ],
     ),
     _OnboardingPage(
-      icon: Icons.bar_chart,
-      title: 'Analytics & Insights',
-      subtitle: 'Verfolge Team-Stimmung, Sprint-Velocity und Team-Health über Zeit. Die KI erkennt Impediments, Risiken und Verbesserungspotenziale.',
+      icon: Icons.chat_bubble_outline,
+      title: 'Zwei Arten zu interagieren',
+      subtitle: 'Wähle, wie du mit der KI arbeiten möchtest:',
       color: Color(0xFF2D6A4F),
+      features: [
+        '🎯 Geführter Modus: Die KI stellt strukturierte Fragen (perfekt für Scrum-Einsteiger)',
+        '💬 Freier Chat: Stelle beliebige Fragen oder diskutiere Themen (für erfahrene Nutzer)',
+      ],
     ),
     _OnboardingPage(
-      icon: Icons.rocket_launch_outlined,
-      title: 'Loslegen',
-      subtitle: 'Konfiguriere dein Team, wähle deine KI-Einstellungen und starte gleich mit deiner ersten Zeremonie!',
+      icon: Icons.tips_and_updates,
+      title: 'Tipps für beste Ergebnisse',
+      subtitle: 'So holst du das Beste aus AgileAI heraus:',
       color: Color(0xFFB5179E),
+      features: [
+        '💡 Sei konkret bei Antworten',
+        '📝 Nutze Antwort-Chips für schnelle Eingaben',
+        '🎯 Starte Zeremonien über das Kalender-Icon',
+        '❓ Tippe auf Info-Icons für Scrum-Erklärungen',
+        '📊 Alle Ergebnisse werden automatisch gespeichert',
+      ],
     ),
   ];
 
@@ -142,21 +166,24 @@ class _OnboardingPage extends StatelessWidget {
   final String title;
   final String subtitle;
   final Color color;
+  final List<String>? features;
 
   const _OnboardingPage({
     required this.icon,
     required this.title,
     required this.subtitle,
     required this.color,
+    this.features,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(32),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const SizedBox(height: 20),
           Container(
             width: 120,
             height: 120,
@@ -166,7 +193,7 @@ class _OnboardingPage extends StatelessWidget {
             ),
             child: Icon(icon, size: 60, color: color),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 32),
           Text(
             title,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -183,6 +210,30 @@ class _OnboardingPage extends StatelessWidget {
                 ),
             textAlign: TextAlign.center,
           ),
+          if (features != null) ...[
+            const SizedBox(height: 24),
+            ...features!.map((feature) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (!feature.contains(RegExp(r'[✓🎯💬💡📝❓📊]')))
+                    Icon(Icons.check_circle, color: color, size: 20)
+                  else
+                    const SizedBox(width: 20),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      feature,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            height: 1.4,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            )),
+          ],
         ],
       ),
     );
